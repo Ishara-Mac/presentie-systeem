@@ -1,12 +1,12 @@
 public class Anders {
-    public String naam;
-    public Integer perm;
-    public Integer id;
-    public Boolean login;
+    private String naam;
+    private Integer perm;
+    private Integer id;
+    private Boolean login;
 
 
     public void shZiek(){
-        //output: zieke leerlingen
+        //output: zieke leerlingen van klas x
     }
     public void shAllZiek(){
         //output:alle zieke leerlingen
