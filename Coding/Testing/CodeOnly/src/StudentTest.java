@@ -19,7 +19,6 @@ class StudentTest {
     private Date date1;
     private Date date2;
 
-
     @BeforeEach
     public void settingStuff(){
         st1 = new Student(1, "harry@hu.nl", "123", "Harry");
