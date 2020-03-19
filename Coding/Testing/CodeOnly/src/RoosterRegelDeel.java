@@ -6,13 +6,19 @@ public class RoosterRegelDeel {
     private LocalDateTime eindtijd;
     private TijdBlok blok;
 
-    public RoosterRegelDeel(LocalDateTime begintijd,LocalDateTime eindtijd, College les) {
+    public RoosterRegelDeel(LocalDateTime begintijd,LocalDateTime eindtijd, College les,TijdBlok blok) {
         this.begintijd =begintijd;
         this.eindtijd=eindtijd;
         this.les=les;
+        this.blok=blok;
+
     }
 
     public void setLes(College les) {
         this.les = les;
+    }
+
+    public void setBlok(TijdBlok blok) {
+        this.blok = blok;
     }
 }
