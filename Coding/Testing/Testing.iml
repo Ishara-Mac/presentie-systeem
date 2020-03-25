@@ -35,5 +35,6 @@
     </orderEntry>
     <orderEntry type="module" module-name="Coding" />
     <orderEntry type="library" name="org.openjfx:javafx-fxml:13" level="project" />
+    <orderEntry type="library" name="org.junit.jupiter:junit-jupiter:5.4.2" level="project" />
   </component>
 </module>
