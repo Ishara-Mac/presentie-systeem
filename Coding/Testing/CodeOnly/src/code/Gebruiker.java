@@ -5,5 +5,7 @@ public class Gebruiker  {
     private String wachwoord;
 
     public Gebruiker(String username, String wachtwoord) {
+        this.username=username;
+        this.wachwoord=wachtwoord;
     }
 }
