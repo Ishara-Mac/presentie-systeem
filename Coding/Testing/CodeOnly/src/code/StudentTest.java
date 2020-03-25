@@ -1,9 +1,11 @@
+package code;
+
 import code.College;
 import code.CollegeType;
 import code.Student;
 import code.TijdBlok;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.util.Calendar;
 import java.util.Date;
