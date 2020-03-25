@@ -1,7 +1,6 @@
 package code;
 
-public class Docent extends Gebruiker{
+public class Docent{
 
-    public Docent(String username,String wachtwoord
-    ) {super(username,wachtwoord); }
+
 }

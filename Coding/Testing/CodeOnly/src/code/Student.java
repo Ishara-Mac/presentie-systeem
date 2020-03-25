@@ -8,7 +8,7 @@ import code.PresentieStatus;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Student extends Gebruiker{
+public class Student{
     private int studentNr;
     private String naam;
     private PresentieStatus presentie;
@@ -16,8 +16,8 @@ public class Student extends Gebruiker{
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
     private ZiekMelding ziekMelding = new ZiekMelding(this);
 
-    public Student(int studentNr, String wachtwoord, String naam,String username){
-        super(wachtwoord,username);
+    public Student(int studentNr,  String naam){
+
         this.studentNr = studentNr;
         this.naam=naam;
         presentie = PresentieStatus.Present;
