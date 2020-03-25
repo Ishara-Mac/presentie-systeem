@@ -1,11 +1,7 @@
 package code;
 
-public class Gebruiker  {
-    private String username;
-    private String wachwoord;
-
-    public Gebruiker(String username, String wachtwoord) {
-        this.username=username;
-        this.wachwoord=wachtwoord;
+public class Gebruiker  extends Acces{
+    public Gebruiker(String username,String password,String acces) {
+        super(username,password,acces);
     }
 }
