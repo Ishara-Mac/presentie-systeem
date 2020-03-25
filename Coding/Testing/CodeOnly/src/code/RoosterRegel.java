@@ -1,3 +1,5 @@
+package code;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -16,13 +18,13 @@ public class RoosterRegel {
         return regels;
     }
 
-    public void setregel(College les, int beginUur, int beginMinuut, int eindUur, int eindMinuut){
+    public void setregel(College les, int beginUur, int beginMinuut, int eindUur, int eindMinuut, TijdBlok blok){
        boolean check=true;
        try{
         LocalDateTime begin=dag.atTime(beginUur,beginMinuut);
         LocalDateTime eind=dag.atTime(eindUur,eindMinuut);
            if(begin.isBefore(eind)){
-               RoosterRegelDeel regel=new RoosterRegelDeel(begin,eind,les);
+               RoosterRegelDeel regel=new RoosterRegelDeel(begin,eind,les,blok);
                colleges.add(regel);}
        }
        catch (Exception e){

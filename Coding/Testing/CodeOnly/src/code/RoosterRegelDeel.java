@@ -1,3 +1,7 @@
+package code;
+
+import code.College;
+
 import java.time.LocalDateTime;
 
 public class RoosterRegelDeel {
@@ -6,7 +10,7 @@ public class RoosterRegelDeel {
     private LocalDateTime eindtijd;
     private TijdBlok blok;
 
-    public RoosterRegelDeel(LocalDateTime begintijd,LocalDateTime eindtijd, College les,TijdBlok blok) {
+    public RoosterRegelDeel(LocalDateTime begintijd, LocalDateTime eindtijd, College les, TijdBlok blok) {
         this.begintijd =begintijd;
         this.eindtijd=eindtijd;
         this.les=les;

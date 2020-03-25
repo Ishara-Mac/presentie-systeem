@@ -1,3 +1,5 @@
+package code;
+
 public class Afmelding {
     private College les;
     private Student student;

@@ -1,7 +1,14 @@
+package code;
+
+import code.Afmelding;
+import code.College;
+import code.Gebruiker;
+import code.PresentieStatus;
+
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Student extends Gebruiker{
+public class Student extends Gebruiker {
     private int studentNr;
     private String naam;
     private PresentieStatus presentie;

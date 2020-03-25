@@ -1,3 +1,5 @@
+package code;
+
 public class College {
     private String naam;
 
