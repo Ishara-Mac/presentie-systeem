@@ -1,5 +1,10 @@
 package code;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class College {
     private String collegenaam;
 
@@ -7,6 +12,8 @@ public class College {
     private Klas klas;
     private Lokaal lokaal;
     private CollegeType collegeType;
+
+    private static ArrayList<College> allColleges = new ArrayList<>();
 
     public College(String collegenaam, CollegeType collegeType, Klas klas){
         this.collegenaam = collegenaam;
@@ -33,8 +40,33 @@ public class College {
     public Lokaal getLokaal(){return lokaal;}
     public Docent getDocent(){return docent;}
     public Klas getKlas(){return klas;}
+    public static ArrayList<College> getAllCollege(){return allColleges;}
 
-    public String toString(){
-        return collegenaam;
+    public static void procesCollege() throws IOException {
+        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Colleges");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ", 3);
+            CollegeType typeNieuw = null;
+            Klas klasNieuw = null;
+
+            for(CollegeType bestaandeType : CollegeType.values()){
+                if(bestaandeType.toString().equals(arrOfStr[1])){
+                    typeNieuw = bestaandeType;
+                }
+            }
+            for(Klas bestaandeKlas : Klas.getAllKlassen()){
+                if(bestaandeKlas.getKlasNaam().equals(arrOfStr[2])){
+                    klasNieuw = bestaandeKlas;
+                }
+            }
+            if( arrOfStr[0] != null && typeNieuw != null && klasNieuw!= null ){
+                allColleges.add(new College(arrOfStr[0], typeNieuw, klasNieuw));
+            }
+        }
+        reader.close();
     }
+
+    public String toString(){return String.format("%s %s voor klas %s", collegeType, collegenaam, klas.getKlasNaam());}
 }

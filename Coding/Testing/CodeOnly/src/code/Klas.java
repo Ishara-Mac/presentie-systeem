@@ -35,7 +35,15 @@ public class Klas {
     public ArrayList<Student> getStudenten(){return studenten;}
     public static ArrayList<Klas> getAllKlassen(){return klassen;}
 
-    public void addStudent(Student student){studenten.add(student);}
+    public static void procesKlas() throws IOException{
+        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Klassen");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(new Klas(line).toString());
+        }
+        reader.close();
+    }
 
     private void addStudenten() throws IOException {
         FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Studenten");
@@ -45,7 +53,7 @@ public class Klas {
             String[] arrOfStr = line.split(" : ", 2);
             String naam = arrOfStr[0];
             String klas = arrOfStr[1];
-            if(naam != null|| klas!= null){
+            if(naam != null && klas!= null){
                 if(klas.equals(klasNaam)){
                     studenten.add(new Student (naam, this));
                 }
@@ -53,6 +61,7 @@ public class Klas {
         }
         reader.close();
     }
+//    public void addStudent(Student student){studenten.add(student);}
 
     public String toString(){
         StringBuilder output = new StringBuilder();

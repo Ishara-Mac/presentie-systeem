@@ -11,15 +11,18 @@ import static code.TijdBlok.*;
 
 public class KlasTest {
     public static void main(String[] args) throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Klassen");
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            System.out.println(new Klas(line).toString());
-        }
-        reader.close();
+        Klas.procesKlas();
+        College.procesCollege();
+        RoosterRegel.procesRooster();
+
+        System.out.println(Klas.getAllKlassen());
+        System.out.println(College.getAllCollege());
+
+        Rooster rooster = new Rooster();
+        System.out.println(rooster.getRegels());
     }
 
+    
 //    public void stuff(){
 //        Klas v1 = new Klas("v1a");
 //        Klas v2 = new Klas("v1a");

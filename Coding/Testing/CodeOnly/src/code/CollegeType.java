@@ -12,7 +12,6 @@ public enum CollegeType {
     }
 
     public String toString(){
-        return "" + this.type;
+        return this.type;
     }
-
 }

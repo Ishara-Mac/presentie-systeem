@@ -1,5 +1,8 @@
 package code;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,13 +13,10 @@ public class RoosterRegel {
     private TijdBlok tijdBlok;
     private static ArrayList<RoosterRegel> regels = new ArrayList<>();
 
-//    public RoosterRegel() {}
-
     public RoosterRegel(LocalDate dag, College college, TijdBlok tijdBlok) {
         this.dag = dag;
         this.college = college;
         this.tijdBlok = tijdBlok;
-        regels.add(this);
     }
 
     public static ArrayList<RoosterRegel> getRegels() {
@@ -33,7 +33,37 @@ public class RoosterRegel {
     }
     public void setTijd(TijdBlok tijdBlok){this.tijdBlok = tijdBlok;}
 
-    public String toString(){
-        return String.format("Op %s van %s is %s %s",dag, tijdBlok, college.getType(), college);
+    public static void procesRooster() throws IOException {
+        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/RoosterRegel");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ", 3);
+            LocalDate huidigeDatum;
+            College huidigCollege = null;
+            TijdBlok huidigeType = null;
+
+            try{
+                huidigeDatum = LocalDate.parse(arrOfStr[0]);
+            }catch(IllegalArgumentException e){
+                huidigeDatum = null;
+            }
+            for(College college : College.getAllCollege()){
+                if(college.getNaam().equals(arrOfStr[1])){
+                    huidigCollege = college;
+                }
+            }
+            for(TijdBlok tijdBlok : TijdBlok.values()){
+                if(tijdBlok.getBlok().equals(arrOfStr[2])){
+                    huidigeType = tijdBlok;
+                }
+            }
+            if( huidigeDatum != null && huidigeType != null && huidigCollege!= null ){
+                regels.add(new RoosterRegel(huidigeDatum, huidigCollege, huidigeType));
+            }
+        }
+        reader.close();
     }
+
+    public String toString(){return String.format("Op %s van %s is %s\n",dag, tijdBlok, college);}
 }
