@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="763.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.RoosterController">
+    <children>
+        <Label layoutX="33.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="jaar:" textAlignment="CENTER" />
+        <Label fx:id="jaarNr" layoutX="132.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
+        <Label layoutX="258.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="maand:" textAlignment="CENTER" />
+        <Label fx:id="maandNr" layoutX="357.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
+        <Label layoutX="487.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="week:" textAlignment="CENTER" />
+        <Label fx:id="weekNr" layoutX="586.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
+        <Label layoutX="945.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="datum:" textAlignment="CENTER" />
+        <DatePicker fx:id="huidigeDatum" layoutX="1044.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" />
+
+        <Label layoutX="32.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
+        <Label layoutX="258.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
+        <Label layoutX="486.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
+        <Label layoutX="713.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
+        <Label layoutX="945.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
+
+        <Button fx:id="prevDay" layoutX="45.0" layoutY="91.0" mnemonicParsing="false" text="Vorige Dag"  onAction="#toonVorigeDag"/>
+        <Button fx:id="today" layoutX="505.0" layoutY="91.0" mnemonicParsing="false" text="Vandaag"  onAction="#toonVandaag"/>
+        <Button fx:id="nextDay" layoutX="998.0" layoutY="91.0" mnemonicParsing="false" text="Volgende Dag"  onAction="#toonVolgendeDag"/>
+
+        <ListView fx:id="thisDay" layoutX="32.0" layoutY="137.0" prefHeight="602.0" prefWidth="1111.0" />
+
+
+        <ListView fx:id="maandag" layoutX="32.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="dinsdag" layoutX="713.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="woensdag" layoutX="258.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="donderdag" layoutX="486.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="vrijdag" layoutX="945.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+
+
+   </children>
+</AnchorPane>

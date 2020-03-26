@@ -40,7 +40,7 @@ public class Klas {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            System.out.println(new Klas(line).toString());
+            new Klas(line);
         }
         reader.close();
     }

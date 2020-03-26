@@ -2,8 +2,13 @@ package code;
         import java.util.ArrayList;
 
 public class Rooster {
-    private ArrayList<RoosterRegel> regels = new ArrayList<>();
+    private static Rooster rooster;
 
+    public static void setRooster(Rooster hetrooster){rooster = hetrooster;}
+    public static Rooster getRooster(){return rooster;}
+
+
+    private ArrayList<RoosterRegel> regels = new ArrayList<>();
     public Rooster(){
         addRegels();
     }
