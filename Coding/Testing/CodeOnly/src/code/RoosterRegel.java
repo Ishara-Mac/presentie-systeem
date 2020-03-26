@@ -6,11 +6,16 @@ import java.util.ArrayList;
 
 public class RoosterRegel {
     private LocalDate dag;
-    private ArrayList<RoosterRegelDeel> colleges;
-    private static ArrayList<RoosterRegel> regels;
+    private College college;
+    private TijdBlok tijdBlok;
+    private static ArrayList<RoosterRegel> regels = new ArrayList<>();
 
-    public RoosterRegel(LocalDate dag) {
+//    public RoosterRegel() {}
+
+    public RoosterRegel(LocalDate dag, College college, TijdBlok tijdBlok) {
         this.dag = dag;
+        this.college = college;
+        this.tijdBlok = tijdBlok;
         regels.add(this);
     }
 
@@ -18,20 +23,17 @@ public class RoosterRegel {
         return regels;
     }
 
-    public void setregel(College les, int beginUur, int beginMinuut, int eindUur, int eindMinuut, TijdBlok blok){
-       boolean check=true;
-       try{
-        LocalDateTime begin=dag.atTime(beginUur,beginMinuut);
-        LocalDateTime eind=dag.atTime(eindUur,eindMinuut);
-           if(begin.isBefore(eind)){
-               RoosterRegelDeel regel=new RoosterRegelDeel(begin,eind,les,blok);
-               colleges.add(regel);}
-       }
-       catch (Exception e){
-           e.printStackTrace();
-       }
+    public LocalDate getDag(){return dag;}
+    public College getCollege(){return college;}
+    public TijdBlok getTijd(){return tijdBlok;}
+
+    public void setDag(LocalDate dag){this.dag = dag;}
+    public void setCollege(College college) {
+        this.college = college;
     }
+    public void setTijd(TijdBlok tijdBlok){this.tijdBlok = tijdBlok;}
 
-
-
+    public String toString(){
+        return String.format("Op %s van %s is %s %s",dag, tijdBlok, college.getType(), college);
+    }
 }

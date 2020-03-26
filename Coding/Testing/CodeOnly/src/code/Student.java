@@ -12,14 +12,21 @@ public class Student{
     private int studentNr;
     private String naam;
     private PresentieStatus presentie;
+    private Klas klas;
+
     private ArrayList<Afmelding> afmeldingen = new ArrayList<>();
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
     private ZiekMelding ziekMelding = new ZiekMelding(this);
 
-    public Student(int studentNr,  String naam){
+    private static int nextStudNr = 1;
+    private static ArrayList<Student> studenten = new ArrayList<>();
 
-        this.studentNr = studentNr;
+    public Student(String naam, Klas klas){
         this.naam=naam;
+        this.klas = klas;
+        this.studentNr = nextStudNr;
+
+        nextStudNr++;
         presentie = PresentieStatus.Present;
     }
 
@@ -28,6 +35,9 @@ public class Student{
     }
     public String getNaam(){
         return naam;
+    }
+    public ArrayList<Student> getAllStudents(){
+        return studenten;
     }
 
     public void getAfmeldingen(){
@@ -69,5 +79,9 @@ public class Student{
             ziekMelding.setBeginDatum(date);
             presentie = PresentieStatus.Ziek;
         }
+    }
+
+    public String toString(){
+        return String.format("Naam %s || Studentnr %d", naam, studentNr);
     }
 }
