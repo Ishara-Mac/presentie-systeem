@@ -16,7 +16,7 @@ public class Student{
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
     private ZiekMelding ziekMelding = new ZiekMelding(this);
 
-    public Student(int studentNr,  String naam){
+    public Student(int studentNr,  String naam,String pw,String usn){
 
         this.studentNr = studentNr;
         this.naam=naam;

@@ -15,4 +15,7 @@ public class Acces {
 
 
     }
+    public String toString(){
+        return String.format("%s : %s : %s",username,wachwoord,acces);
+    }
 }
