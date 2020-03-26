@@ -11,8 +11,8 @@ import java.util.Date;
 public class Student{
     private int studentNr;
     private String naam;
-    private PresentieStatus presentie;
     private Klas klas;
+    private PresentieStatus presentie;
 
     private ArrayList<Afmelding> afmeldingen = new ArrayList<>();
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
