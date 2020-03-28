@@ -17,25 +17,26 @@
         <Label layoutX="945.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="datum:" textAlignment="CENTER" />
         <DatePicker fx:id="huidigeDatum" layoutX="1044.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" />
 
-        <Label layoutX="32.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
-        <Label layoutX="258.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
-        <Label layoutX="486.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
-        <Label layoutX="713.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
-        <Label layoutX="945.0" layoutY="103.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
+        <Button fx:id="prevDay" layoutX="45.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonVorigeDag" text="Vorige Dag" />
+        <Button fx:id="today" layoutX="276.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonVandaag" text="Vandaag" />
+        <Button fx:id="nextDay" layoutX="491.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonVolgendeDag" text="Volgende Dag" />
 
-        <Button fx:id="prevDay" layoutX="45.0" layoutY="91.0" mnemonicParsing="false" text="Vorige Dag"  onAction="#toonVorigeDag"/>
-        <Button fx:id="today" layoutX="505.0" layoutY="91.0" mnemonicParsing="false" text="Vandaag"  onAction="#toonVandaag"/>
-        <Button fx:id="nextDay" layoutX="998.0" layoutY="91.0" mnemonicParsing="false" text="Volgende Dag"  onAction="#toonVolgendeDag"/>
+        <Button layoutX="995.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonWeek" prefHeight="25.0" prefWidth="53.0" text="Week" />
+        <Button layoutX="1047.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonDag" prefHeight="25.0" prefWidth="53.0" text="Dag" />
 
-        <ListView fx:id="thisDay" layoutX="32.0" layoutY="137.0" prefHeight="602.0" prefWidth="1111.0" />
+        <ListView fx:id="thisDay" layoutX="18.0" layoutY="137.0" prefHeight="602.0" prefWidth="1125.0" />
 
+        <Label fx:id="maandagLabel" layoutX="32.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
+        <Label fx:id="dinsdagLabel" layoutX="258.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="woensdagLabel" layoutX="486.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="donderdagLabel" layoutX="713.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="vrijdagLabel" layoutX="945.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
 
-        <ListView fx:id="maandag" layoutX="32.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="dinsdag" layoutX="713.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="woensdag" layoutX="258.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="donderdag" layoutX="486.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="vrijdag" layoutX="945.0" layoutY="142.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-
+        <ListView fx:id="maandagListview" layoutX="32.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="dinsdagListview" layoutX="258.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="woensdagListview" layoutX="486.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="donderdagListview" layoutX="714.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="vrijdagListview" layoutX="945.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
 
    </children>
 </AnchorPane>

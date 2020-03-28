@@ -65,5 +65,5 @@ public class RoosterRegel {
         reader.close();
     }
 
-    public String toString(){return String.format("Op %s van %s is %s\n",dag, tijdBlok, college);}
+    public String toString(){return String.format("%s\n%s\n\n%s\n",dag, tijdBlok, college);}
 }

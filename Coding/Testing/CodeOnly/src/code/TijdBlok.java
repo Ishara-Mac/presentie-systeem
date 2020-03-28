@@ -1,6 +1,8 @@
 package code;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 
 public enum TijdBlok {
     ochtendBlok("Ochtendblok",new Time(8, 30, 0),new Time(11, 30, 0)),
@@ -22,6 +24,6 @@ public enum TijdBlok {
     public String getBlok(){return bloknaam;}
 
     public String toString(){
-        return String.format("%s tot %s", this.beginTijd.toString(), this.eindTijd.toString());
+        return String.format("%s-%s", this.beginTijd.toString(), this.eindTijd.toString());
     }
 }

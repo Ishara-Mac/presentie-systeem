@@ -68,5 +68,5 @@ public class College {
         reader.close();
     }
 
-    public String toString(){return String.format("%s %s voor klas %s", collegeType, collegenaam, klas.getKlasNaam());}
+    public String toString(){return String.format("%s %s: %s", collegeType, collegenaam, klas.getKlasNaam());}
 }
