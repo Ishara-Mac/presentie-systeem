@@ -1,13 +1,21 @@
 package code;
-
-import java.util.ArrayList;
+        import java.util.ArrayList;
 
 public class Rooster {
-    ArrayList<RoosterRegel> regels;
+    private static Rooster rooster;
 
-    public void fill(){
-        regels.addAll(RoosterRegel.getRegels());
+    public static void setRooster(Rooster hetrooster){rooster = hetrooster;}
+    public static Rooster getRooster(){return rooster;}
 
 
+    private ArrayList<RoosterRegel> regels = new ArrayList<>();
+    public Rooster(){
+        addRegels();
     }
+
+    public void addRegels(){regels.addAll(RoosterRegel.getRegels());}
+    public ArrayList<RoosterRegel> getRegels(){return regels;}
+
+
+    public String toString(){return regels.toString();}
 }
