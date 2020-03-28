@@ -15,7 +15,6 @@ public class RoosterRegelDeel {
         this.eindtijd=eindtijd;
         this.les=les;
         this.blok=blok;
-
     }
 
     public void setLes(College les) {
