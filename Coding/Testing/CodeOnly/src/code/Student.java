@@ -11,7 +11,9 @@ import java.util.Date;
 public class Student{
     private int studentNr;
     private String naam;
+    private Klas klas;
     private PresentieStatus presentie;
+
     private ArrayList<Afmelding> afmeldingen = new ArrayList<>();
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
     private ZiekMelding ziekMelding = new ZiekMelding(this);
@@ -28,6 +30,9 @@ public class Student{
     }
     public String getNaam(){
         return naam;
+    }
+    public ArrayList<Student> getAllStudents(){
+        return studenten;
     }
 
     public void getAfmeldingen(){
@@ -69,5 +74,9 @@ public class Student{
             ziekMelding.setBeginDatum(date);
             presentie = PresentieStatus.Ziek;
         }
+    }
+
+    public String toString(){
+        return String.format("Naam %s || Studentnr %d", naam, studentNr);
     }
 }

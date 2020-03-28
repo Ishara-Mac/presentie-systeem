@@ -1,37 +1,69 @@
 package code;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class RoosterRegel {
     private LocalDate dag;
-    private ArrayList<RoosterRegelDeel> colleges;
-    private static ArrayList<RoosterRegel> regels;
+    private College college;
+    private TijdBlok tijdBlok;
+    private static ArrayList<RoosterRegel> regels = new ArrayList<>();
 
-    public RoosterRegel(LocalDate dag) {
+    public RoosterRegel(LocalDate dag, College college, TijdBlok tijdBlok) {
         this.dag = dag;
-        regels.add(this);
+        this.college = college;
+        this.tijdBlok = tijdBlok;
     }
 
     public static ArrayList<RoosterRegel> getRegels() {
         return regels;
     }
 
-    public void setregel(College les, int beginUur, int beginMinuut, int eindUur, int eindMinuut, TijdBlok blok){
-       boolean check=true;
-       try{
-        LocalDateTime begin=dag.atTime(beginUur,beginMinuut);
-        LocalDateTime eind=dag.atTime(eindUur,eindMinuut);
-           if(begin.isBefore(eind)){
-               RoosterRegelDeel regel=new RoosterRegelDeel(begin,eind,les,blok);
-               colleges.add(regel);}
-       }
-       catch (Exception e){
-           e.printStackTrace();
-       }
+    public LocalDate getDag(){return dag;}
+    public College getCollege(){return college;}
+    public TijdBlok getTijd(){return tijdBlok;}
+
+    public void setDag(LocalDate dag){this.dag = dag;}
+    public void setCollege(College college) {
+        this.college = college;
+    }
+    public void setTijd(TijdBlok tijdBlok){this.tijdBlok = tijdBlok;}
+
+    public static void procesRooster() throws IOException {
+        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/RoosterRegel");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ", 3);
+            LocalDate huidigeDatum;
+            College huidigCollege = null;
+            TijdBlok huidigeType = null;
+
+            try{
+                huidigeDatum = LocalDate.parse(arrOfStr[0]);
+            }catch(IllegalArgumentException e){
+                huidigeDatum = null;
+            }
+            for(College college : College.getAllCollege()){
+                if(college.getNaam().equals(arrOfStr[1])){
+                    huidigCollege = college;
+                }
+            }
+            for(TijdBlok tijdBlok : TijdBlok.values()){
+                if(tijdBlok.getBlok().equals(arrOfStr[2])){
+                    huidigeType = tijdBlok;
+                }
+            }
+            if( huidigeDatum != null && huidigeType != null && huidigCollege!= null ){
+                regels.add(new RoosterRegel(huidigeDatum, huidigCollege, huidigeType));
+            }
+        }
+        reader.close();
     }
 
-
-
+    public String toString(){return String.format("%s\n%s\n\n%s\n",dag, tijdBlok, college);}
 }
