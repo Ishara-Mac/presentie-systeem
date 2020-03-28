@@ -23,6 +23,10 @@ public class Run {
 //        System.out.println(na);
 
         ArrayList<Acces> accounting= ReadDoc.readShadow();
+        for (Acces acces:accounting
+             ) {System.out.println(acces.toString());
+
+        }
 
 
 
