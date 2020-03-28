@@ -23,9 +23,6 @@ import java.sql.Date;
 import java.util.Locale;
 
 public class RoosterController {
-    @FXML private Label jaarNr;
-    @FXML private Label maandNr;
-    @FXML private Label weekNr;
     @FXML private ListView<String> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
 
@@ -53,13 +50,9 @@ public class RoosterController {
     String dayOfWeek;
 
     public void initialize(){
-        jaarNr.setText(Integer.toString( vandaag.getYear() ));
-        maandNr.setText(vandaag.getMonth().toString());
-
         Calendar cal = Calendar.getInstance();
         cal.setTime(Date.valueOf(vandaag));
         int dezeWeek = cal.get(Calendar.WEEK_OF_YEAR);
-        weekNr.setText(Integer.toString(dezeWeek));
 
         dayOfWeek = vandaag.getDayOfWeek().toString();
 
@@ -167,25 +160,4 @@ public class RoosterController {
             dag.setVisible(!isDagVisible);
         }
     }
-
-
-
-//            int val = dagCollege.getDayOfWeek().getValue();
-//            switch(val){
-//                case 1:
-//                    maandag.getItems().add(maandag.getItems().size(), regel.toString());
-//                    break;
-//                case 2:
-//                    dinsdag.getItems().add(dinsdag.getItems().size(), regel.toString());
-//                    break;
-//                case 3:
-//                    woensdag.getItems().add(woensdag.getItems().size(), regel.toString());
-//                    break;
-//                case 4:
-//                    donderdag.getItems().add(donderdag.getItems().size(), regel.toString());
-//                    break;
-//                case 5:
-//                    vrijdag.getItems().add(vrijdag.getItems().size(), regel.toString());
-//                    break;
-//            }
 }

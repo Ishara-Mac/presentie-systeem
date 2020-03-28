@@ -5,10 +5,13 @@ import code.College;
 import code.Gebruiker;
 import code.PresentieStatus;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Student{
+import static code.Klas.getAllKlassen;
+
+public class Student extends Gebruiker{
     private int studentNr;
     private String naam;
     private Klas klas;
@@ -21,8 +24,20 @@ public class Student{
     private static int nextStudNr = 1;
     private static ArrayList<Student> studenten = new ArrayList<>();
 
+    public Student(String naam, String klasStr){
+        super(naam);
+        for(Klas klas : getAllKlassen()){
+            if(klas.getKlasNaam().equals(klasStr)){this.klas = klas;}
+        }
+
+        this.studentNr = nextStudNr;
+
+        nextStudNr++;
+        presentie = PresentieStatus.Present;
+    }
+
     public Student(String naam, Klas klas){
-        this.naam=naam;
+        super(naam);
         this.klas = klas;
         this.studentNr = nextStudNr;
 
@@ -36,8 +51,25 @@ public class Student{
     public String getNaam(){
         return naam;
     }
+
+    public Klas getKlas(){
+        return klas;
+    }
     public ArrayList<Student> getAllStudents(){
         return studenten;
+    }
+
+    @Override
+    public ArrayList<RoosterRegel> procesRooster(){
+        ArrayList<RoosterRegel> regels = new ArrayList<>();
+
+        for(RoosterRegel regel : RoosterRegel.getRegels()){
+            System.out.println(regel.getCollege().getKlas().getKlasNr());
+            if(regel.getCollege().getKlas().getKlasNr() == klas.getKlasNr()){
+                regels.add(regel);
+            }
+        }
+        return regels;
     }
 
     public void getAfmeldingen(){
