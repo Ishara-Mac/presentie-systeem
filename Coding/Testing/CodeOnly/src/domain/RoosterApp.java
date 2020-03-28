@@ -19,8 +19,7 @@ public class RoosterApp extends Application {
 
         Gebruiker stud = new Student("Tony", "v1b");
 
-
-        Rooster.setCurrentUser(huidigeGebruiker);
+        Rooster.setCurrentUser(stud);
         Rooster rooster = new Rooster();
         Rooster.setRooster(rooster);
 
