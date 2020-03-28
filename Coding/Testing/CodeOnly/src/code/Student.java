@@ -18,10 +18,15 @@ public class Student{
     private ArrayList<ZiekMelding> ziekMeldingen = new ArrayList<>();
     private ZiekMelding ziekMelding = new ZiekMelding(this);
 
-    public Student(int studentNr,  String naam){
+    private static int nextStudNr = 1;
+    private static ArrayList<Student> studenten = new ArrayList<>();
 
-        this.studentNr = studentNr;
+    public Student(String naam, Klas klas){
         this.naam=naam;
+        this.klas = klas;
+        this.studentNr = nextStudNr;
+
+        nextStudNr++;
         presentie = PresentieStatus.Present;
     }
 
