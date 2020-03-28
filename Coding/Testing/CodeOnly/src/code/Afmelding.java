@@ -2,6 +2,7 @@ package code;
 
 public class Afmelding {
     private College les;
+    private RoosterRegel regel;
     private Student student;
 
     public Afmelding(College les, Student student){
@@ -10,7 +11,7 @@ public class Afmelding {
     }
 
     public String toString(){
-        return String.format("Van %s tijdens het %s %s was %s afwezig.\n", les.getTijd(), les.getType(), les.getNaam(), student.getNaam());
+        return String.format("Van %s tijdens het %s %s was %s afwezig.\n", regel.getTijd(), les.getType(), les.getNaam(), student.getNaam());
     }
 
 }
