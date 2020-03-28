@@ -6,7 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class College {
-    private String collegenaam;
+    private String collegeNaam;
+    private String collegeCode;
 
     private Docent docent;
     private Klas klas;
@@ -15,28 +16,32 @@ public class College {
 
     private static ArrayList<College> allColleges = new ArrayList<>();
 
-    public College(String collegenaam, CollegeType collegeType, Klas klas){
-        this.collegenaam = collegenaam;
+    private ArrayList<Docent> docenten = new ArrayList<>();
+
+    public College(String collegenaam, String collegeCode, CollegeType collegeType, Klas klas){
+        this.collegeNaam = collegenaam;
+        this.collegeCode = collegeCode;
         this.collegeType = collegeType;
         this.klas = klas;
     }
 
-    public College(String collegenaam, CollegeType collegeType, Docent docent, Klas klas, Lokaal lokaal){
-        this.collegenaam = collegenaam;
+    public College(String collegenaam, String collegeCode, CollegeType collegeType, Klas klas, Docent docent){
+        this.collegeNaam = collegenaam;
+        this.collegeCode = collegeCode;
         this.collegeType = collegeType;
-        this.docent = docent;
         this.klas = klas;
-        this.lokaal = lokaal;
+        this.docent = docent;
     }
 
     public void setType(CollegeType collegeType){this.collegeType = collegeType;}
-    public void setNaam(String collegenaam){this.collegenaam = collegenaam;}
+    public void setNaam(String collegenaam){this.collegeNaam = collegenaam;}
     public void setLokaal(Lokaal lokaal){this.lokaal = lokaal;}
     public void setDocent(Docent docent){this.docent = docent;}
     public void setKlas(Klas klas){this.klas = klas;}
 
     public CollegeType getType(){return collegeType;}
-    public String getNaam(){return collegenaam;}
+    public String getNaam(){return collegeNaam;}
+    public String getCode(){return collegeCode;}
     public Lokaal getLokaal(){return lokaal;}
     public Docent getDocent(){return docent;}
     public Klas getKlas(){return klas;}
@@ -47,26 +52,33 @@ public class College {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ", 3);
+            String[] arrOfStr = line.split(" : ");
             CollegeType typeNieuw = null;
             Klas klasNieuw = null;
+            Docent docentnieuw = null;
+
+            int docentInt = Integer.parseInt(arrOfStr[4]);
 
             for(CollegeType bestaandeType : CollegeType.values()){
-                if(bestaandeType.toString().equals(arrOfStr[1])){
-                    typeNieuw = bestaandeType;
-                }
+                if(bestaandeType.toString().equals(arrOfStr[2])){ typeNieuw = bestaandeType; }
             }
             for(Klas bestaandeKlas : Klas.getAllKlassen()){
-                if(bestaandeKlas.getKlasNaam().equals(arrOfStr[2])){
-                    klasNieuw = bestaandeKlas;
-                }
+                if(bestaandeKlas.getKlasNaam().equals(arrOfStr[3])){ klasNieuw = bestaandeKlas; }
             }
-            if( arrOfStr[0] != null && typeNieuw != null && klasNieuw!= null ){
-                allColleges.add(new College(arrOfStr[0], typeNieuw, klasNieuw));
+            for(Docent docent: Docent.getDocenten() ){
+                if(docentInt == docent.getDocentNr()){ docentnieuw = docent; }
+            }
+            if( arrOfStr[0] != null && typeNieuw != null && klasNieuw!= null && docentnieuw != null){
+                College nieuwCollege = new College(arrOfStr[0], arrOfStr[1]+klasNieuw.getKlasNaam(), typeNieuw, klasNieuw, docentnieuw);
+                allColleges.add(nieuwCollege);
+                docentnieuw.addCollege(nieuwCollege);
+            }else if(arrOfStr[0] != null && typeNieuw != null && klasNieuw!= null){
+                allColleges.add(new College(arrOfStr[0], arrOfStr[1]+klasNieuw.getKlasNaam(), typeNieuw, klasNieuw));
             }
         }
         reader.close();
     }
 
-    public String toString(){return String.format("%s %s: %s", collegeType, collegenaam, klas.getKlasNaam());}
+    public String toString(){
+        return String.format("%s         %s\n%s",collegeNaam, klas.getKlasNaam(), collegeType);}
 }

@@ -3,17 +3,19 @@ package code;
 
 public class Rooster {
     private static Rooster rooster;
+    private static Gebruiker huidigegebruiker;
 
     public static void setRooster(Rooster hetrooster){rooster = hetrooster;}
+    public static void setCurrentUser(Gebruiker nieuwgebruiker){huidigegebruiker = nieuwgebruiker;}
+    public static Gebruiker getCurrentUser(){return huidigegebruiker;}
     public static Rooster getRooster(){return rooster;}
-
 
     private ArrayList<RoosterRegel> regels = new ArrayList<>();
     public Rooster(){
-        addRegels();
+        regels.addAll(huidigegebruiker.procesRooster());
     }
 
-    public void addRegels(){regels.addAll(RoosterRegel.getRegels());}
+    public void addRegel(RoosterRegel regel){regels.add(regel);}
     public ArrayList<RoosterRegel> getRegels(){return regels;}
 
 

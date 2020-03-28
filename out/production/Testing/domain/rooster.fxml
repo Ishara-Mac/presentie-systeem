@@ -8,14 +8,8 @@
 
 <AnchorPane prefHeight="763.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.RoosterController">
     <children>
-        <Label layoutX="33.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="jaar:" textAlignment="CENTER" />
-        <Label fx:id="jaarNr" layoutX="132.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
-        <Label layoutX="258.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="maand:" textAlignment="CENTER" />
-        <Label fx:id="maandNr" layoutX="357.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
-        <Label layoutX="487.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="week:" textAlignment="CENTER" />
-        <Label fx:id="weekNr" layoutX="586.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="???" textAlignment="CENTER" />
         <Label layoutX="945.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="datum:" textAlignment="CENTER" />
-        <DatePicker fx:id="huidigeDatum" layoutX="1044.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" />
+        <DatePicker fx:id="huidigeDatum" layoutX="994.0" layoutY="30.0" prefHeight="39.0" prefWidth="149.0" />
 
         <Button fx:id="prevDay" layoutX="45.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonVorigeDag" text="Vorige Dag" />
         <Button fx:id="today" layoutX="276.0" layoutY="91.0" mnemonicParsing="false" onAction="#toonVandaag" text="Vandaag" />
