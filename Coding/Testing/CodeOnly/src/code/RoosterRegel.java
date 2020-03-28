@@ -10,12 +10,14 @@ import java.util.ArrayList;
 public class RoosterRegel {
     private LocalDate dag;
     private College college;
+    private Klas klas;
     private TijdBlok tijdBlok;
     private static ArrayList<RoosterRegel> regels = new ArrayList<>();
 
     public RoosterRegel(LocalDate dag, College college, TijdBlok tijdBlok) {
         this.dag = dag;
         this.college = college;
+        this.klas = college.getKlas();
         this.tijdBlok = tijdBlok;
     }
 
@@ -41,7 +43,7 @@ public class RoosterRegel {
             String[] arrOfStr = line.split(" : ", 3);
             LocalDate huidigeDatum;
             College huidigCollege = null;
-            TijdBlok huidigeType = null;
+            TijdBlok huidigeTijd = null;
 
             try{
                 huidigeDatum = LocalDate.parse(arrOfStr[0]);
@@ -49,21 +51,22 @@ public class RoosterRegel {
                 huidigeDatum = null;
             }
             for(College college : College.getAllCollege()){
-                if(college.getNaam().equals(arrOfStr[1])){
+                if(college.getCode().equals(arrOfStr[1])){
                     huidigCollege = college;
                 }
             }
             for(TijdBlok tijdBlok : TijdBlok.values()){
                 if(tijdBlok.getBlok().equals(arrOfStr[2])){
-                    huidigeType = tijdBlok;
+                    huidigeTijd = tijdBlok;
                 }
             }
-            if( huidigeDatum != null && huidigeType != null && huidigCollege!= null ){
-                regels.add(new RoosterRegel(huidigeDatum, huidigCollege, huidigeType));
+            if( huidigeDatum != null && huidigeTijd != null && huidigCollege!= null ){
+                regels.add(new RoosterRegel(huidigeDatum, huidigCollege, huidigeTijd));
             }
         }
         reader.close();
     }
 
-    public String toString(){return String.format("%s\n%s\n\n%s\n",dag, tijdBlok, college);}
+    public String toString(){
+        return String.format("%s    %s\n\n%s\n",dag, tijdBlok, college);}
 }

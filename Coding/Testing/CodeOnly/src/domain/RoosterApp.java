@@ -1,9 +1,6 @@
 package domain;
 
-import code.College;
-import code.Klas;
-import code.Rooster;
-import code.RoosterRegel;
+import code.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,10 +11,16 @@ import java.io.IOException;
 
 public class RoosterApp extends Application {
     public static void main(String[] args) throws IOException {
+
+        Gebruiker huidigeGebruiker = new Docent ("Tony");
         Klas.procesKlas();
         College.procesCollege();
         RoosterRegel.procesRooster();
 
+        Gebruiker stud = new Student("Tony", "v1b");
+
+
+        Rooster.setCurrentUser(huidigeGebruiker);
         Rooster rooster = new Rooster();
         Rooster.setRooster(rooster);
 
