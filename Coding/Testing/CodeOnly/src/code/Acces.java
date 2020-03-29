@@ -6,10 +6,23 @@ public class Acces {
     private String acces;
     private boolean loggedin=false;
 
-    public Acces(String username, String wachwoord,String acces) {
+    public String getUsername() {
+        return username;
+    }
+
+    public String getWachwoord() {
+        return wachwoord;
+    }
+
+    public void setLoggedin(boolean loggedin) {
+        this.loggedin = loggedin;
+    }
+
+    public Acces(String username, String wachwoord, String acces) {
         this.username=username;
         this.wachwoord=wachwoord;
         this.acces=acces;
+
 
 
 
