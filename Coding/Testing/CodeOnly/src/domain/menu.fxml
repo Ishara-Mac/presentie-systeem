@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.MenuController">
    <children>
-      <Button layoutX="330.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="melding maken" />
+      <Button onAction="#meldziek" layoutX="330.0" layoutY="117.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="meld je ziek" />
       <Button layoutX="330.0" layoutY="50.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="Rooster" />
       <Button layoutX="335.0" layoutY="206.0" mnemonicParsing="false" text="presentie" />
    </children>
