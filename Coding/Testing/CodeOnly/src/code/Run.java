@@ -22,8 +22,8 @@ public class Run {
 //        System.out.println(nu);
 //        System.out.println(na);
 
-        ArrayList<Acces> accounting= ReadDoc.readShadow();
-        for (Acces acces:accounting
+        ArrayList<Gebruiker> accounting= ReadDoc.readShadow();
+        for (Gebruiker acces:accounting
              ) {System.out.println(acces.toString());
 
         }

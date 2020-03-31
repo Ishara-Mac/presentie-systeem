@@ -6,6 +6,10 @@ public class Acces {
     private String acces;
     private boolean loggedin=false;
 
+    public String getAcces() {
+        return acces;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -22,10 +26,6 @@ public class Acces {
         this.username=username;
         this.wachwoord=wachwoord;
         this.acces=acces;
-
-
-
-
 
 
     }

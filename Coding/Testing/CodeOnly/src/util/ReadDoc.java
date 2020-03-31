@@ -13,8 +13,8 @@ import java.util.TreeMap;
 public class ReadDoc {
 
 
-    public static ArrayList<Acces> readShadow() {
-        ArrayList<Acces> readshad=new ArrayList<>();
+    public static ArrayList<Gebruiker> readShadow() {
+        ArrayList<Gebruiker> readshad=new ArrayList<>();
         String doc="shadow";
         Path pdoc=Path.of(doc);
         TreeMap<String,String> accounts= new TreeMap<>();
@@ -22,10 +22,13 @@ public class ReadDoc {
         try {
             BufferedReader reader= Files.newBufferedReader(pdoc);
             String text=reader.readLine();
+
             while(text!=null){
-            String[] lijst=text.split(" : ");
-                Acces gebr=new Acces(lijst[0],lijst[1],lijst[2]);
-                accounts.put(lijst[0],lijst[1]);
+                System.out.println(text);
+                String[] lijst=text.split(" : ");
+
+                Gebruiker gebr=new Gebruiker(lijst[0],lijst[1],lijst[2],lijst[3]);
+                //accounts.put(lijst[0],lijst[1]);
                 readshad.add(gebr);
                 text=reader.readLine();
                 
