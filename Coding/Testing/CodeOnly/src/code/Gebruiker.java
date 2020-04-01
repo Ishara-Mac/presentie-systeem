@@ -6,6 +6,9 @@ public class Gebruiker{
     private String naam;
     private String wachwoord;
     private String acces;
+    
+    public Gebruiker(String username,String password,String acces) {
+
     private String email;
     public Gebruiker(String username,String password,String acces,String email) {
         this.wachwoord=password;
