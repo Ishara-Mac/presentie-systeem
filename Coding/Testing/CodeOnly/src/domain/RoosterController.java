@@ -23,6 +23,7 @@ import java.sql.Date;
 import java.util.Locale;
 
 public class RoosterController {
+    public Button ziekmeldKnop;
     @FXML private ListView<String> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
 
@@ -45,6 +46,7 @@ public class RoosterController {
     private Rooster rooster = Rooster.getRooster();
     private ArrayList<ListView<String>> weekdagen = new ArrayList<>();
     private ArrayList<Label> weekDagLabels = new ArrayList<>();
+    private boolean dagIsVisible = true;
 
     LocalDate vandaag = LocalDate.now();
     String dayOfWeek;
@@ -76,28 +78,38 @@ public class RoosterController {
     }
 
     public void toonVorigeDag(ActionEvent actionEvent) {
-        huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
-        setDag();
+        if(dagIsVisible){
+            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
+            setDag();
+        }
+        else{
+            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(7));
+            setWeek();
+        }
     }
 
     public void toonVandaag(ActionEvent actionEvent) {
         huidigeDatum.setValue(vandaag);
-        setDag();
+        if(dagIsVisible){ setDag(); }else{ setWeek(); }
     }
 
     public void toonVolgendeDag(ActionEvent actionEvent) {
-        huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
-        setDag();
+        if(dagIsVisible){
+            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
+            setDag();
+        }
+        else{
+            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(7));
+            setWeek();
+        }
     }
 
     public void toonDag(ActionEvent actionEvent) {
-        huidigeDatum.setValue(vandaag);
         dagVisible(true);
         setDag();
     }
 
     public void toonWeek(ActionEvent actionEvent) {
-        huidigeDatum.setValue(vandaag);
         dagVisible(false);
         setWeek();
     }
@@ -152,6 +164,7 @@ public class RoosterController {
     }
 
     public void dagVisible(Boolean isDagVisible){
+        dagIsVisible = isDagVisible;
         thisDay.setVisible(isDagVisible);
         for(ListView<String> dag : weekdagen){
             dag.setVisible(!isDagVisible);
