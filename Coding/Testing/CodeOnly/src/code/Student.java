@@ -5,6 +5,7 @@ import code.College;
 import code.Gebruiker;
 import code.PresentieStatus;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -58,13 +59,13 @@ public class Student extends Gebruiker{
     public ArrayList<Student> getAllStudents(){
         return studenten;
     }
+    public PresentieStatus getPresentie(){return presentie;}
 
     @Override
     public ArrayList<RoosterRegel> procesRooster(){
         ArrayList<RoosterRegel> regels = new ArrayList<>();
 
         for(RoosterRegel regel : RoosterRegel.getRegels()){
-            System.out.println(regel.getCollege().getKlas().getKlasNr());
             if(regel.getCollege().getKlas().getKlasNr() == klas.getKlasNr()){
                 regels.add(regel);
             }
@@ -101,14 +102,17 @@ public class Student extends Gebruiker{
         else{System.out.println("Je bent al afgemeld voor college" + college);}
     }
 
-    public void ziekMelden(Date date){
+    public void ziekMelden() throws IOException {
         if(presentie == PresentieStatus.Ziek){
-            ziekMelding.setEindDatum(date);
-            presentie = PresentieStatus.Present;
+            ziekMelding.setEindDatum();
             ziekMeldingen.add(ziekMelding);
-            ziekMelding = new ZiekMelding(this);
+            ziekMelding.verwerkZiekmelding();
+
+            presentie = PresentieStatus.Present;
         }else{
-            ziekMelding.setBeginDatum(date);
+            this.ziekMelding = new ZiekMelding(this);
+            //ziekMelding.setBeginDatum(date);
+            ziekMelding.verwerkZiekmelding();
             presentie = PresentieStatus.Ziek;
         }
     }

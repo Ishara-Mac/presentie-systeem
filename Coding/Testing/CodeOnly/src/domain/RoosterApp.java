@@ -12,7 +12,7 @@ import java.io.IOException;
 public class RoosterApp extends Application {
     public static void main(String[] args) throws IOException {
 
-        Gebruiker huidigeGebruiker = new Docent ("Tony");
+        Gebruiker doc = new Docent ("Tony");
         Klas.procesKlas();
         College.procesCollege();
         RoosterRegel.procesRooster();
