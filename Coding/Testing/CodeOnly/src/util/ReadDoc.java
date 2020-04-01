@@ -1,6 +1,5 @@
 package util;
 
-import code.Acces;
 import code.Gebruiker;
 
 import java.io.BufferedReader;

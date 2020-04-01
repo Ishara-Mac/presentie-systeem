@@ -7,10 +7,10 @@ public class ZiekteMelding {
     private LocalDate afDatum;
     private LocalDate terugDatum;
 
-    public ZiekteMelding(Gebruiker student) {
+    public ZiekteMelding(Gebruiker student,LocalDate terugDatum) {
         this.student = student;
         setAfDatum(LocalDate.now());
-        setTerugDatum(afDatum.plusDays(7));
+        this.terugDatum=terugDatum;
     }
 
     public void setAfDatum(LocalDate afDatum) {

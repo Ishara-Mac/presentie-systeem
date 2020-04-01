@@ -1,6 +1,5 @@
 package domain;
 
-import code.Acces;
 import code.Gebruiker;
 import code.Rooster;
 import javafx.event.ActionEvent;
