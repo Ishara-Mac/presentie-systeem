@@ -1,7 +1,9 @@
 package domain;
 
+import code.Docent;
 import code.Rooster;
 import code.RoosterRegel;
+import code.Student;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -60,7 +62,14 @@ public class RoosterController {
 
         huidigeDatum.setValue(vandaag);
         setWeekdagen();
-        setDag();
+
+        if(Rooster.getCurrentUser() instanceof Docent){
+            dagVisible(true);
+            setDag();
+        }else if(Rooster.getCurrentUser() instanceof Student){
+            dagVisible(false);
+            setWeek();
+        }
     }
 
     public void setWeekdagen(){
