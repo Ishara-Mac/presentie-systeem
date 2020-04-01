@@ -7,6 +7,7 @@ public class Gebruiker{
     private String wachwoord;
     private String acces;
     public Gebruiker(String username,String password,String acces) {
+
     }
 
     public Gebruiker(String naam){
