@@ -7,11 +7,12 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.LoginController">
    <children>
-      <TextField fx:id="username" layoutX="183.0" layoutY="156.0" promptText="username" />
-      <TextField fx:id="password" layoutX="183.0" layoutY="236.0" promptText="password" />
-      <Button fx:id="cancel" layoutX="278.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleCancel" text="cancel" />
-      <Button fx:id="confirm" layoutX="156.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleconfirm" text="confirm" />
-      <Label layoutX="245.0" layoutY="53.0" text="Login" />
-      <Label layoutX="139.0" layoutY="323.0" prefHeight="18.0" prefWidth="33.0" />
+      <TextField fx:id="username" layoutX="126.0" layoutY="157.0" promptText="username" />
+      <TextField fx:id="password" layoutX="126.0" layoutY="224.0" promptText="password" />
+      <Button fx:id="cancel" layoutX="232.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleCancel" text="cancel" />
+      <Button fx:id="confirm" layoutX="107.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleconfirm" text="confirm" />
+      <Label layoutX="186.0" layoutY="71.0" text="Login" />
+      <Label layoutX="57.0" layoutY="160.0" prefHeight="18.0" prefWidth="68.0" text="username" />
+      <Label layoutX="57.0" layoutY="228.0" text="Password" />
    </children>
 </AnchorPane>
