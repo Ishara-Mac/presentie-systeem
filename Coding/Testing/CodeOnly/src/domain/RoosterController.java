@@ -1,22 +1,20 @@
 package domain;
 
-import code.Docent;
-import code.Rooster;
-import code.RoosterRegel;
-import code.Student;
-import javafx.beans.Observable;
+import code.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
-import java.awt.image.AreaAveragingScaleFilter;
-import java.awt.image.ImageObserver;
-import java.sql.Array;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
@@ -25,13 +23,10 @@ import java.sql.Date;
 import java.util.Locale;
 
 public class RoosterController {
-    public Button ziekmeldKnop;
+    @FXML private Button ziekmeldKnop;
+
     @FXML private ListView<String> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
-
-    @FXML private Button prevDay;
-    @FXML private Button today;
-    @FXML private Button nextDay;
 
     @FXML private Label maandagLabel;
     @FXML private Label dinsdagLabel;
@@ -46,6 +41,7 @@ public class RoosterController {
     @FXML private ListView<String> vrijdagListview = new ListView<>();
 
     private Rooster rooster = Rooster.getRooster();
+    private Student gebruiker;
     private ArrayList<ListView<String>> weekdagen = new ArrayList<>();
     private ArrayList<Label> weekDagLabels = new ArrayList<>();
     private boolean dagIsVisible = true;
@@ -56,7 +52,6 @@ public class RoosterController {
     public void initialize(){
         Calendar cal = Calendar.getInstance();
         cal.setTime(Date.valueOf(vandaag));
-        int dezeWeek = cal.get(Calendar.WEEK_OF_YEAR);
 
         dayOfWeek = vandaag.getDayOfWeek().toString();
 
@@ -69,6 +64,8 @@ public class RoosterController {
         }else if(Rooster.getCurrentUser() instanceof Student){
             dagVisible(false);
             setWeek();
+            gebruiker = (Student) Rooster.getCurrentUser();
+            setZiekMeldKnop();
         }
     }
 
@@ -86,7 +83,7 @@ public class RoosterController {
         weekdagen.add(vrijdagListview);
     }
 
-    public void toonVorigeDag(ActionEvent actionEvent) {
+    public void toonVorigeDag() {
         if(dagIsVisible){
             huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
             setDag();
@@ -97,12 +94,12 @@ public class RoosterController {
         }
     }
 
-    public void toonVandaag(ActionEvent actionEvent) {
+    public void toonVandaag() {
         huidigeDatum.setValue(vandaag);
         if(dagIsVisible){ setDag(); }else{ setWeek(); }
     }
 
-    public void toonVolgendeDag(ActionEvent actionEvent) {
+    public void toonVolgendeDag() {
         if(dagIsVisible){
             huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
             setDag();
@@ -113,12 +110,12 @@ public class RoosterController {
         }
     }
 
-    public void toonDag(ActionEvent actionEvent) {
+    public void toonDag() {
         dagVisible(true);
         setDag();
     }
 
-    public void toonWeek(ActionEvent actionEvent) {
+    public void toonWeek() {
         dagVisible(false);
         setWeek();
     }
@@ -131,7 +128,6 @@ public class RoosterController {
         for(RoosterRegel regel : alleRegels){
             LocalDate dagCollege = regel.getDag();
             if(dagCollege.compareTo(huidigeDag) == 0){
-                System.out.println(regel);
                 regels.add(regel.toString());
             }
         }
@@ -147,7 +143,6 @@ public class RoosterController {
             for(RoosterRegel regel : alleRegels){
                 LocalDate dagCollege = regel.getDag();
                 if(dagCollege.compareTo(huidigeDag) == 0){
-                    System.out.println(regel);
                     regels.add(regel.toString());
                 }
             }
@@ -182,4 +177,28 @@ public class RoosterController {
             dag.setVisible(!isDagVisible);
         }
     }
+
+    public void setZiekMeldKnop(){
+        ziekmeldKnop.setVisible(true);
+        if(gebruiker.getPresentie() == PresentieStatus.Ziek){
+            ziekmeldKnop.setText("Beter melden");
+        }
+        else{ ziekmeldKnop.setText("Ziek Melden"); }
+    }
+
+    public void toonZiekMeldScherm() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("ziekMelden.fxml"));
+        Parent root = loader.load();
+
+        Stage ziekmeldStage = new Stage();
+        ziekmeldStage.setTitle(ziekmeldKnop.getText().toLowerCase());
+        ziekmeldStage.setScene(new Scene(root));
+        ziekmeldStage.initModality(Modality.APPLICATION_MODAL);
+        ziekmeldStage.showAndWait();
+
+        initialize();
+    }
+//    gebruiker.ziekMelden(Date.valueOf( LocalDate.now()));
+//    setZiekMeldKnop();
+//    gebruiker.getZiekMeldingen();
 }
