@@ -11,15 +11,14 @@ import java.io.IOException;
 
 public class RoosterApp extends Application {
     public static void main(String[] args) throws IOException {
-
-        Gebruiker doc = new Docent ("Tony");
+        Gebruiker doc = new Docent ("Tony", "Hank", "123");
         Klas.procesKlas();
         College.procesCollege();
         RoosterRegel.procesRooster();
 
-        Gebruiker stud = new Student("Tony", "v1b");
+        Gebruiker stud = new Student("Tony", "Hank", "v1a", "hey");
 
-        Rooster.setCurrentUser(stud);
+        Rooster.setCurrentUser(doc);
         Rooster rooster = new Rooster();
         Rooster.setRooster(rooster);
 
