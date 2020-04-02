@@ -27,13 +27,14 @@ public class Klas {
         nextKlasNr++;
         klassen.add(this);
 
-        addStudenten();
+        //addStudenten();
     }
 
     public String getKlasNaam(){return klasNaam;}
     public int getKlasNr(){return klasNr;}
     public ArrayList<Student> getStudenten(){return studenten;}
     public static ArrayList<Klas> getAllKlassen(){return klassen;}
+
 
     public static void procesKlas() throws IOException{
         FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Klassen");
@@ -50,18 +51,21 @@ public class Klas {
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ", 2);
-            String naam = arrOfStr[0];
-            String klas = arrOfStr[1];
-            if(naam != null && klas!= null){
+            String[] arrOfStr = line.split(" : ");
+            String voornaam = arrOfStr[0];
+            String achternaam = arrOfStr[1];
+            String klas = arrOfStr[2];
+            String password = arrOfStr[3];
+            if(voornaam != null && achternaam != null && klas!= null && password != null){
                 if(klas.equals(klasNaam)){
-                    studenten.add(new Student (naam, this));
+                    studenten.add(new Student (voornaam, achternaam, klas, password));
                 }
             }
         }
         reader.close();
     }
-//    public void addStudent(Student student){studenten.add(student);}
+
+    public void addStudent(Student student){studenten.add(student);}
 
     public String toString(){
         StringBuilder output = new StringBuilder();

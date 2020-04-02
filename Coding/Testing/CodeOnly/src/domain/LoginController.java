@@ -1,39 +1,72 @@
 package domain;
 
-import code.Gebruiker;
-import code.Rooster;
+import code.*;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import util.ReadDoc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginController {
-    public TextField password;
-    public TextField username;
-    public Button confirm;
-    public Button cancel;
+    @FXML private TextField password;
+    @FXML private TextField username;
+    @FXML private Button confirm;
+    @FXML private Button cancel;
 
-    public void handleCancel(ActionEvent actionEvent) {
+    public void initialize() throws IOException {
+        Klas.procesKlas();
+        College.procesCollege();
+        RoosterRegel.procesRooster();
+        Gebruiker.setAllUsers();
+    }
+
+    public void closeLoginWindow() {
         Stage stage = (Stage) cancel.getScene().getWindow();
         stage.close();
     }
 
-
-    public void handleconfirm(ActionEvent actionEvent) {
-        String pass =password.getText();
+    public void handleconfirm() throws IOException {
+        String pass = password.getText();
         String usn = username.getText();
-        ArrayList<Gebruiker> accounts= ReadDoc.readShadow();
-        for (Gebruiker acces:accounts
-             ) {if ((acces.getWachwoord()==pass)&(acces.getNaam()==usn)){
-                 Rooster.setCurrentUser(new Gebruiker(acces.getNaam(),acces.getWachwoord(),acces.getAcces(),acces.getEmail()));
-                 //acces.setLoggedin(true);
-                 break;
-        }
+        boolean isLoginCorrect = false;
 
+        ArrayList<Gebruiker> accounts= Gebruiker.getAllUsers();
+
+        for (Gebruiker account:accounts) {
+            String naam = account.getNaam();
+            String ww = account.getWachtwoord();
+            if ( ( naam.equals( usn )) && ( ww.equals(pass)) ){
+                System.out.println("yes, we're in.");
+                Rooster.setCurrentUser(account);
+                isLoginCorrect = true;
+                break;
+            }
         }
+        if(isLoginCorrect){ openRoosterApp(); }
+    }
+
+    public void openRoosterApp() throws IOException {
+        Rooster rooster = new Rooster();
+        Rooster.setRooster(rooster);
+
+        closeLoginWindow();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("rooster.fxml"));
+        Parent root = loader.load();
+
+        Stage ziekmeldStage = new Stage();
+        ziekmeldStage.setScene(new Scene(root));
+        ziekmeldStage.initModality(Modality.APPLICATION_MODAL);
+        ziekmeldStage.showAndWait();
+
+        initialize();
 
     }
 }
