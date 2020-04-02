@@ -5,6 +5,7 @@ import code.College;
 import code.Gebruiker;
 import code.PresentieStatus;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,6 @@ import static code.Klas.getAllKlassen;
 
 public class Student extends Gebruiker{
     private int studentNr;
-    private String naam;
     private Klas klas;
     private PresentieStatus presentie;
 
@@ -24,8 +24,8 @@ public class Student extends Gebruiker{
     private static int nextStudNr = 1;
     private static ArrayList<Student> studenten = new ArrayList<>();
 
-    public Student(String naam, String klasStr){
-        super(naam);
+    public Student(String voornaam, String achternaam, String klasStr, String wachtwoord){
+        super(voornaam, achternaam, wachtwoord);
         for(Klas klas : getAllKlassen()){
             if(klas.getKlasNaam().equals(klasStr)){this.klas = klas;}
         }
@@ -36,8 +36,8 @@ public class Student extends Gebruiker{
         presentie = PresentieStatus.Present;
     }
 
-    public Student(String naam, Klas klas){
-        super(naam);
+    public Student(String voornaam, String achternaam, Klas klas, String wachtwoord){
+        super(voornaam, achternaam, wachtwoord);
         this.klas = klas;
         this.studentNr = nextStudNr;
 
@@ -45,26 +45,32 @@ public class Student extends Gebruiker{
         presentie = PresentieStatus.Present;
     }
 
-    public int getStudentNr(){
-        return studentNr;
-    }
-    public String getNaam(){
-        return naam;
-    }
+//    public Student(String voornaam, Klas klas){
+//        super(voornaam, achternaam, wachtwoord);
+//        this.klas = klas;
+//        this.studentNr = nextStudNr;
+//
+//        nextStudNr++;
+//        presentie = PresentieStatus.Present;
+//    }
 
-    public Klas getKlas(){
-        return klas;
-    }
     public ArrayList<Student> getAllStudents(){
         return studenten;
     }
+
+    public int getStudentNr(){
+        return studentNr;
+    }
+    public Klas getKlas(){
+        return klas;
+    }
+    public PresentieStatus getPresentie(){return presentie;}
 
     @Override
     public ArrayList<RoosterRegel> procesRooster(){
         ArrayList<RoosterRegel> regels = new ArrayList<>();
 
         for(RoosterRegel regel : RoosterRegel.getRegels()){
-            System.out.println(regel.getCollege().getKlas().getKlasNr());
             if(regel.getCollege().getKlas().getKlasNr() == klas.getKlasNr()){
                 regels.add(regel);
             }
@@ -74,7 +80,7 @@ public class Student extends Gebruiker{
 
     public void getAfmeldingen(){
         if(afmeldingen.isEmpty()){
-            System.out.println( naam + " heeft zich nog nooit afgemeld!");
+            System.out.println( super.getNaam() + " heeft zich nog nooit afgemeld!");
         }else{
             for(Afmelding afmelding : afmeldingen){
                 String output = afmelding.toString();
@@ -85,8 +91,8 @@ public class Student extends Gebruiker{
 
     public void getZiekMeldingen(){
         if(presentie == PresentieStatus.Ziek){
-            System.out.println(String.format("%s is vanaf %s ziek en is nog steeds ziek.\n", naam, ziekMelding.getBeginDatum()));
-        }else if(ziekMeldingen.isEmpty()){System.out.println( naam + " heeft zich nog nooit ziekgemeld!\n");}
+            System.out.println(String.format("%s is vanaf %s ziek en is nog steeds ziek.\n", super.getNaam(), ziekMelding.getBeginDatum()));
+        }else if(ziekMeldingen.isEmpty()){System.out.println( super.getNaam() + " heeft zich nog nooit ziekgemeld!\n");}
         else{
             for(ZiekMelding ziekmelding : ziekMeldingen){
                 String output = ziekmelding.toString();
@@ -101,19 +107,22 @@ public class Student extends Gebruiker{
         else{System.out.println("Je bent al afgemeld voor college" + college);}
     }
 
-    public void ziekMelden(Date date){
+    public void ziekMelden() throws IOException {
         if(presentie == PresentieStatus.Ziek){
-            ziekMelding.setEindDatum(date);
-            presentie = PresentieStatus.Present;
+            ziekMelding.setEindDatum();
             ziekMeldingen.add(ziekMelding);
-            ziekMelding = new ZiekMelding(this);
+            ziekMelding.verwerkZiekmelding();
+
+            presentie = PresentieStatus.Present;
         }else{
-            ziekMelding.setBeginDatum(date);
+            this.ziekMelding = new ZiekMelding(this);
+            //ziekMelding.setBeginDatum(date);
+            ziekMelding.verwerkZiekmelding();
             presentie = PresentieStatus.Ziek;
         }
     }
 
     public String toString(){
-        return String.format("Naam %s || Studentnr %d", naam, studentNr);
+        return String.format("Naam %s || Wachtwoord %s", super.getNaam(), super.getWachtwoord());
     }
 }

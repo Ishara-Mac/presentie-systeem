@@ -3,14 +3,14 @@ package code;
 import java.time.LocalDate;
 
 public class ZiekteMelding {
-    private Student student;
+    private Gebruiker student;
     private LocalDate afDatum;
     private LocalDate terugDatum;
 
-    public ZiekteMelding(Student student) {
+    public ZiekteMelding(Gebruiker student,LocalDate terugDatum) {
         this.student = student;
         setAfDatum(LocalDate.now());
-        setTerugDatum(afDatum.plusDays(7));
+        this.terugDatum=terugDatum;
     }
 
     public void setAfDatum(LocalDate afDatum) {
