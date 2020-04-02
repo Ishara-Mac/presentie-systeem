@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.ziekMeldController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="310.0" prefWidth="514.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.ZiekMeldController">
     <children>
         <Label fx:id="informationLabel" contentDisplay="CENTER" layoutX="201.0" layoutY="78.0" prefHeight="17.0" prefWidth="112.0" />
         <TextArea fx:id="textField" editable="false" focusTraversable="false" layoutX="25.0" layoutY="115.0" prefHeight="66.0" prefWidth="465.0" wrapText="true" />
