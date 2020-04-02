@@ -69,6 +69,7 @@ public class College {
                 if(docentInt == docent.getDocentNr()){ docentnieuw = docent; }
             }
             if( arrOfStr[0] != null && typeNieuw != null && klasNieuw!= null && docentnieuw != null){
+                System.out.println("Added docent");
                 College nieuwCollege = new College(arrOfStr[0], arrOfStr[1]+klasNieuw.getKlasNaam(), typeNieuw, klasNieuw, docentnieuw);
                 allColleges.add(nieuwCollege);
                 docentnieuw.addCollege(nieuwCollege);

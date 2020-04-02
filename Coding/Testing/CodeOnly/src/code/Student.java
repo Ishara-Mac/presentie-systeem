@@ -122,7 +122,7 @@ public class Student extends Gebruiker{
         }
     }
 
-    public String toString(){
-        return String.format("Naam %s || Wachtwoord %s", super.getNaam(), super.getWachtwoord());
-    }
+//    public String toString(){
+//        return String.format("Naam %s || Wachtwoord %s", super.getNaam(), super.getWachtwoord());
+//    }
 }

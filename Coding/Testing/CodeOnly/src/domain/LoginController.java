@@ -22,9 +22,9 @@ public class LoginController {
 
     public void initialize() throws IOException {
         Klas.procesKlas();
+        Gebruiker.setAllUsers();
         College.procesCollege();
         RoosterRegel.procesRooster();
-        Gebruiker.setAllUsers();
     }
 
     public void closeLoginWindow() {
