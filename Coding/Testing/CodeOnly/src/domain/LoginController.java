@@ -63,8 +63,7 @@ public class LoginController {
 
         Stage ziekmeldStage = new Stage();
         ziekmeldStage.setScene(new Scene(root));
-        ziekmeldStage.initModality(Modality.APPLICATION_MODAL);
-        ziekmeldStage.showAndWait();
+        ziekmeldStage.show();
 
         initialize();
 

@@ -22,7 +22,6 @@ public class Docent extends Gebruiker{
         docenten.add(this);
         this.docentNr = nextDocNr;
         nextDocNr++;
-        System.out.println(this);
     }
 
     public void addCollege(College college){colleges.add((college));}

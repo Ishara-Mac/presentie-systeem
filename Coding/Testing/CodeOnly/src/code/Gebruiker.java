@@ -43,12 +43,10 @@ public class Gebruiker{
                 }else{
                     if(voornaam != null && achternaam != null && password != null){
                         gebr= new Docent(voornaam, achternaam, password);
-                        System.out.println(gebr);
                         Docent.addDocent((Docent) gebr);
                     }
                 }
                 allUsers.add(gebr);
-                System.out.println(gebr);
             }
 
 //            while(text!=null){
