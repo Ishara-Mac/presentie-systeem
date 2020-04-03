@@ -1,7 +1,13 @@
-henk  : 1231 : docent : henk@docent.hu.nl
-patrice : grim : student : patrice@student.hu.nl
-topher : horses&dont*fly)with(us : beheerder : topher@beheerder.hu.nl
-tom : #bored : gebruiker : tom@gebruiker.hu.nl
-hermoinie : powerw@and : student : hermoinie@student.hu.n
-grim : 2357 : student : grim@student.hu.nl
-perka : before@ime : docent : perka@docent.hu.nl
+klaser : piet : wachtwoord
+henk : jan : 1231
+jan : henk : 1231 : v1a
+janneke : henk : 1231 : v1a
+henk : janneke : 1231 : v1a
+henkie : jan : 1231 : v1a
+henkie : janneke : 1231 : v1a
+klaas : piet : 1231 : v1b
+piet : klass : 1231 : v1b
+piet : klaas : 1231 : v1b
+klass : piet : 1231 : v1b
+pieter : klaser : 1231 : v1b
+klaser : piet : 1231 : v1b

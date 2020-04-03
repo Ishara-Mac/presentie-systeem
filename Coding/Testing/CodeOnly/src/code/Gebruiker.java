@@ -3,20 +3,18 @@ package code;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Gebruiker{
     private static ArrayList<Gebruiker> allUsers = new ArrayList<>();
 
     public static void setAllUsers() {
-        ArrayList<Gebruiker> readshad=new ArrayList<>();
 //        String doc="shadow";
 //        Path pdoc=Path.of(doc);
 //        TreeMap<String,String> accounts= new TreeMap<>();
 //        System.out.println(pdoc);
         try {
-            FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Studenten");
+            FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/InlogGegevens");
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
 
