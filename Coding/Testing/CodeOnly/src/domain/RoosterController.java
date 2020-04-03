@@ -3,6 +3,7 @@ package domain;
 import code.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -198,6 +199,23 @@ public class RoosterController {
 
         initialize();
     }
+
+    public void logOut() throws IOException {
+        Stage stage = (Stage) ziekmeldKnop.getScene().getWindow();
+        stage.close();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        Parent root = loader.load();
+
+        Stage loginStage = new Stage();
+        loginStage.setTitle("Login");
+        loginStage.setScene(new Scene(root));
+        loginStage.show();
+
+        initialize();
+    }
+
+
 //    gebruiker.ziekMelden(Date.valueOf( LocalDate.now()));
 //    setZiekMeldKnop();
 //    gebruiker.getZiekMeldingen();
