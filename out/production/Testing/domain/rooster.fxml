@@ -4,13 +4,13 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane prefHeight="763.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.RoosterController">
     <children>
-        <Button fx:id="ziekmeldKnop" onAction="#toonZiekMeldScherm" layoutX="32.0" layoutY="37.0" mnemonicParsing="false" visible="FALSE"/>
+        <Button fx:id="ziekmeldKnop" layoutX="545.0" layoutY="90.0" mnemonicParsing="false" onAction="#toonZiekMeldScherm" prefHeight="25.0" prefWidth="228.0" visible="FALSE" />
         <Label layoutX="945.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="datum:" textAlignment="CENTER" />
         <DatePicker fx:id="huidigeDatum" layoutX="994.0" layoutY="30.0" prefHeight="39.0" prefWidth="149.0" />
 
@@ -48,6 +48,7 @@
         <ListView fx:id="woensdagListview" layoutX="486.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
         <ListView fx:id="donderdagListview" layoutX="714.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
         <ListView fx:id="vrijdagListview" layoutX="945.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+      <Button onAction="#logOut" layoutX="18.0" layoutY="18.0" mnemonicParsing="false" text="Logout" />
 
    </children>
 </AnchorPane>
