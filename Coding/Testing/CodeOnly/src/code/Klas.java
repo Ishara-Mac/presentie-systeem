@@ -46,30 +46,30 @@ public class Klas {
         reader.close();
     }
 
-    private void addStudenten() throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Studenten");
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        String line;
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ");
-            String voornaam = arrOfStr[0];
-            String achternaam = arrOfStr[1];
-            String klas = arrOfStr[2];
-            String password = arrOfStr[3];
-            if(voornaam != null && achternaam != null && klas!= null && password != null){
-                if(klas.equals(klasNaam)){
-                    studenten.add(new Student (voornaam, achternaam, klas, password));
-                }
-            }
-        }
-        reader.close();
-    }
+//    private void addStudenten() throws IOException {
+//        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Studenten");
+//        BufferedReader bufferedReader = new BufferedReader(reader);
+//        String line;
+//        while ((line = bufferedReader.readLine()) != null) {
+//            String[] arrOfStr = line.split(" : ");
+//            String voornaam = arrOfStr[0];
+//            String achternaam = arrOfStr[1];
+//            String klas = arrOfStr[2];
+//            String password = arrOfStr[3];
+//            if(voornaam != null && achternaam != null && klas!= null && password != null){
+//                if(klas.equals(klasNaam)){
+//                    studenten.add(new Student (voornaam, achternaam, klas, password));
+//                }
+//            }
+//        }
+//        reader.close();
+//    }
 
     public void addStudent(Student student){studenten.add(student);}
 
     public String toString(){
         StringBuilder output = new StringBuilder();
-        output.append(String.format("In klas %s zitten %d studenten.\n", klasNaam, studenten.size()));
+        output.append(String.format("In klas %s %d zitten %d studenten.\n", klasNaam, klasNr, studenten.size()));
         for(Student student: studenten){
             output.append(student).append("\n");
         }

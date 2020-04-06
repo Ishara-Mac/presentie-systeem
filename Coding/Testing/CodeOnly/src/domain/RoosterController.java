@@ -23,10 +23,13 @@ import java.util.Calendar;
 import java.sql.Date;
 import java.util.Locale;
 
+import static code.ZiekMelding.readingZiekMeldingen;
+
 public class RoosterController {
     @FXML private Button ziekmeldKnop;
 
-    @FXML private ListView<String> thisDay = new ListView<>();
+    @FXML private ListView<Student> listCurrentCollege = new ListView<>();
+    @FXML private ListView<RoosterRegel> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
 
     @FXML private Label maandagLabel;
@@ -35,22 +38,25 @@ public class RoosterController {
     @FXML private Label donderdagLabel;
     @FXML private Label vrijdagLabel;
 
-    @FXML private ListView<String> maandagListview = new ListView<>();
-    @FXML private ListView<String> dinsdagListview = new ListView<>();
-    @FXML private ListView<String> woensdagListview = new ListView<>();
-    @FXML private ListView<String> donderdagListview = new ListView<>();
-    @FXML private ListView<String> vrijdagListview = new ListView<>();
+    @FXML private ListView<RoosterRegel> maandagListview = new ListView<>();
+    @FXML private ListView<RoosterRegel> dinsdagListview = new ListView<>();
+    @FXML private ListView<RoosterRegel> woensdagListview = new ListView<>();
+    @FXML private ListView<RoosterRegel> donderdagListview = new ListView<>();
+    @FXML private ListView<RoosterRegel> vrijdagListview = new ListView<>();
 
     private Rooster rooster = Rooster.getRooster();
     private Student gebruiker;
-    private ArrayList<ListView<String>> weekdagen = new ArrayList<>();
+    private ArrayList<ListView<RoosterRegel>> weekdagen = new ArrayList<>();
     private ArrayList<Label> weekDagLabels = new ArrayList<>();
     private boolean dagIsVisible = true;
+    private boolean isUserDocent;
 
     LocalDate vandaag = LocalDate.now();
     String dayOfWeek;
 
-    public void initialize(){
+    public void initialize() throws IOException {
+        readingZiekMeldingen();
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(Date.valueOf(vandaag));
 
@@ -60,13 +66,21 @@ public class RoosterController {
         setWeekdagen();
 
         if(Rooster.getCurrentUser() instanceof Docent){
-            dagVisible(true);
-            setDag();
+            isUserDocent = true;
         }else if(Rooster.getCurrentUser() instanceof Student){
-            dagVisible(false);
-            setWeek();
             gebruiker = (Student) Rooster.getCurrentUser();
+            isUserDocent = false;
             setZiekMeldKnop();
+        }
+        setUpLayout();
+    }
+
+    public void setUpLayout(){
+        listCurrentCollege.setVisible(isUserDocent);
+        if(isUserDocent){
+            thisDay.setPrefWidth(550);
+        }else{
+            thisDay.setPrefWidth(1120);
         }
     }
 
@@ -121,15 +135,29 @@ public class RoosterController {
         setWeek();
     }
 
+    public void setCollege(){
+        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
+        ObservableList<Student> alleStudenten = FXCollections.observableArrayList();
+        System.out.println(thisRegel.getCollege().getKlas());
+        for(Student student : thisRegel.getCollege().getKlas().getStudenten()){
+            PresentieStatus ps = student.getPresentie();
+            if(ps == PresentieStatus.Ziek){
+                alleStudenten.add(0, student);
+            }else{alleStudenten.add(student); }
+            System.out.println(ps);
+        }
+        listCurrentCollege.setItems(alleStudenten);
+    }
+
     public void setDag(){
-        ObservableList<String> regels = FXCollections.observableArrayList();
+        ObservableList<RoosterRegel> regels = FXCollections.observableArrayList();
         ArrayList<RoosterRegel> alleRegels = rooster.getRegels();
         LocalDate huidigeDag = huidigeDatum.getValue();
 
         for(RoosterRegel regel : alleRegels){
             LocalDate dagCollege = regel.getDag();
             if(dagCollege.compareTo(huidigeDag) == 0){
-                regels.add(regel.toString());
+                regels.add(regel);
             }
         }
         thisDay.setItems(regels);
@@ -137,14 +165,14 @@ public class RoosterController {
 
     public void setWeek(){
         for(int i = 1; i < 6; i++ ){
-            ObservableList<String> regels = FXCollections.observableArrayList();
+            ObservableList<RoosterRegel> regels = FXCollections.observableArrayList();
             ArrayList<RoosterRegel> alleRegels = rooster.getRegels();
             LocalDate huidigeDag = huidigeDatum.getValue().with(WeekFields.of(Locale.FRANCE).dayOfWeek(), i);
 
             for(RoosterRegel regel : alleRegels){
                 LocalDate dagCollege = regel.getDag();
                 if(dagCollege.compareTo(huidigeDag) == 0){
-                    regels.add(regel.toString());
+                    regels.add(regel);
                 }
             }
 
@@ -171,7 +199,8 @@ public class RoosterController {
     public void dagVisible(Boolean isDagVisible){
         dagIsVisible = isDagVisible;
         thisDay.setVisible(isDagVisible);
-        for(ListView<String> dag : weekdagen){
+        listCurrentCollege.setVisible(isDagVisible);
+        for(ListView<RoosterRegel> dag : weekdagen){
             dag.setVisible(!isDagVisible);
         }
         for(Label dag : weekDagLabels){

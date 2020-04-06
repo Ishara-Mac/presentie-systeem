@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static code.ZiekMelding.*;
+
 public class LoginController {
     @FXML
     private TextField password;
@@ -24,12 +26,7 @@ public class LoginController {
     @FXML
     private Button cancel;
 
-    public void initialize() throws IOException {
-        Klas.procesKlas();
-        Gebruiker.setAllUsers();
-        College.procesCollege();
-        RoosterRegel.procesRooster();
-    }
+    public void initialize() throws IOException {}
 
     public void closeLoginWindow() {
         Stage stage = (Stage) cancel.getScene().getWindow();
