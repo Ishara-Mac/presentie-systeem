@@ -37,7 +37,7 @@
 
         <ListView fx:id="thisDay" layoutX="18.0" layoutY="137.0" prefHeight="602.0" prefWidth="1125.0" />
 
-        <Label fx:id="maandagLabel" layoutX="32.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
+        <Label fx:id="maandagLabel"   onMouseClicked="#handleAbstentie" layoutX="32.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
         <Label fx:id="dinsdagLabel" layoutX="258.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
         <Label fx:id="woensdagLabel" layoutX="486.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
         <Label fx:id="donderdagLabel" layoutX="713.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />

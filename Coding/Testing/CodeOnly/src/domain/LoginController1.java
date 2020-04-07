@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class LoginController {
+class LoginController {
     File file = new File("");//bestand locatie van LoginTest.txt 
     Scanner scan = new Scanner(file);
 
@@ -26,6 +26,9 @@ public class LoginController {
 
     @FXML
     private Label txtLabel;
+
+    public LoginController() throws FileNotFoundException {
+    }
 
     public void Login(ActionEvent event) throws Exception {
         String gebruikersnaam = "";
@@ -56,7 +59,6 @@ public class LoginController {
         loginWacthwoord.setText(null);
     }
 
-    public MainController() throws FileNotFoundException {
-    }
+    //public MainController() throws FileNotFoundException {}
 
 }
