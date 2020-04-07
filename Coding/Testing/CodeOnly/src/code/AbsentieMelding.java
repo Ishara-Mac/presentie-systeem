@@ -15,6 +15,7 @@ public class AbsentieMelding {
         FileWriter writer=new FileWriter("absenties.txt");
         writer.write(regel.toString());
 
+
     }
 
 }
