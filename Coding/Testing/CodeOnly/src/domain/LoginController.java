@@ -1,14 +1,12 @@
 package domain;
 
 import code.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,12 +22,7 @@ public class LoginController {
     @FXML
     private Button cancel;
 
-    public void initialize() throws IOException {
-        Klas.procesKlas();
-        Gebruiker.setAllUsers();
-        College.procesCollege();
-        RoosterRegel.procesRooster();
-    }
+    public void initialize() throws IOException {}
 
     public void closeLoginWindow() {
         Stage stage = (Stage) cancel.getScene().getWindow();

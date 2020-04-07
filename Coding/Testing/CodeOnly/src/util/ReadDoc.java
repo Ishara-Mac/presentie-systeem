@@ -23,7 +23,6 @@
 ////        String doc="shadow";
 ////        Path pdoc=Path.of(doc);
 ////        TreeMap<String,String> accounts= new TreeMap<>();
-////        System.out.println(pdoc);
 //        try {
 //            FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Studenten");
 //            BufferedReader bufferedReader = new BufferedReader(reader);
@@ -52,16 +51,13 @@
 //                }else{
 //                    if(voornaam != null && achternaam != null && password != null){
 //                        gebr= new Docent(voornaam, achternaam, password);
-//                        System.out.println(gebr);
 //                        Docent.addDocent((Docent) gebr);
 //                    }
 //                }
 //                readshad.add(gebr);
-//                System.out.println(gebr);
 //            }
 //
 ////            while(text!=null){
-////                System.out.println(text);
 ////                String[] lijst=text.split(" : ");
 ////
 ////                Gebruiker gebr=new Gebruiker(lijst[0],lijst[1],lijst[2],lijst[3]);
