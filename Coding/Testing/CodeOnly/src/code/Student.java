@@ -57,7 +57,6 @@ public class Student extends Gebruiker{
 //    }
 
     public static ArrayList<Student> getAllStudents(){
-        System.out.println(studenten);
         return studenten; }
 
     public int getStudentNr(){
@@ -119,17 +118,16 @@ public class Student extends Gebruiker{
         if(presentie == PresentieStatus.Ziek){
             ziekMelding.setEindDatum();
             ziekMeldingen.add(ziekMelding);
-            ziekMelding.writingZiekmeldingen();
+            ziekMelding.verwerkZiekmelding();
             presentie = PresentieStatus.Present;
         }else{
             this.ziekMelding = new ZiekMelding(this);
-            //ziekMelding.setBeginDatum(date);
-            ziekMelding.writingZiekmeldingen();
+            ziekMelding.verwerkZiekmelding();
             presentie = PresentieStatus.Ziek;
         }
     }
 
     public String toString(){
-        return String.format("Naam %s || StudentenNr %d || %s", super.getNaam(), studentNr, presentie);
+        return String.format("Naam %s || StudentenNr %d ", super.getNaam(), studentNr);
     }
 }

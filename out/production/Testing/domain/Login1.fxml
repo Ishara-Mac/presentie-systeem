@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainController">
+   <children>
+      <Label layoutX="415.0" layoutY="46.0" text="E-mail:" />
+      <Label layoutX="414.0" layoutY="121.0" text="Wachtwoord:" />
+      <TextField fx:id="loginGebruikersnaam" layoutX="414.0" layoutY="76.0" promptText="e-mail adres...." />
+      <Button layoutX="522.0" layoutY="252.0" mnemonicParsing="false" onAction="#Login" text="login" />
+      <Label fx:id="txtLabel" layoutX="414.0" layoutY="14.0" text="Login status..." />
+      <Button layoutX="411.0" layoutY="252.0" mnemonicParsing="false" onAction="#Reset" text="Reset" />
+      <TextArea layoutX="6.0" layoutY="10.0" prefHeight="66.0" prefWidth="330.0" text="Welkom op de HU school app.&#10;Log hier in met uw school e-mail account &#10;en uw wachtwoord.&#10;" />
+      <PasswordField fx:id="loginWacthwoord" layoutX="411.0" layoutY="151.0" promptText="wachtwoord..." />
+      <Hyperlink layoutX="411.0" layoutY="191.0" text="Wachtwoord vergeten?" />
+      <CheckBox layoutX="413.0" layoutY="221.0" mnemonicParsing="false" text="Onthoudt mijn inloggegevens" />
+      <ImageView fitHeight="269.0" fitWidth="409.0" layoutX="6.0" layoutY="79.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Desktop/hu%20foto.PNG" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

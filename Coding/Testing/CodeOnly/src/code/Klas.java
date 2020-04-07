@@ -35,7 +35,6 @@ public class Klas {
     public ArrayList<Student> getStudenten(){return studenten;}
     public static ArrayList<Klas> getAllKlassen(){return klassen;}
 
-
     public static void procesKlas() throws IOException{
         FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Klassen");
         BufferedReader bufferedReader = new BufferedReader(reader);

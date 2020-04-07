@@ -56,7 +56,6 @@ public class College {
             CollegeType typeNieuw = null;
             Klas klasNieuw = null;
             Docent docentnieuw = null;
-
             int docentInt = Integer.parseInt(arrOfStr[4]);
 
             for(CollegeType bestaandeType : CollegeType.values()){
@@ -80,5 +79,5 @@ public class College {
     }
 
     public String toString(){
-        return String.format("%s         %s\n%s",collegeNaam, klas.getKlasNaam(), collegeType);}
+        return String.format("%s   %s   %s",collegeNaam, klas.getKlasNaam(), collegeType);}
 }

@@ -3,7 +3,7 @@ package domain;
 import code.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +15,9 @@ import javafx.scene.control.ListView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
@@ -28,9 +31,10 @@ import static code.ZiekMelding.readingZiekMeldingen;
 public class RoosterController {
     @FXML private Button ziekmeldKnop;
 
-    @FXML private ListView<Student> listCurrentCollege = new ListView<>();
+    @FXML private ListView<Presentie> listCurrentCollege = new ListView<>();
     @FXML private ListView<RoosterRegel> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
+    @FXML private Label currentCollegeLabel;
 
     @FXML private Label maandagLabel;
     @FXML private Label dinsdagLabel;
@@ -48,7 +52,7 @@ public class RoosterController {
     private Student gebruiker;
     private ArrayList<ListView<RoosterRegel>> weekdagen = new ArrayList<>();
     private ArrayList<Label> weekDagLabels = new ArrayList<>();
-    private boolean dagIsVisible = true;
+    private boolean dagIsVisible;
     private boolean isUserDocent;
 
     LocalDate vandaag = LocalDate.now();
@@ -77,10 +81,13 @@ public class RoosterController {
 
     public void setUpLayout(){
         listCurrentCollege.setVisible(isUserDocent);
+        currentCollegeLabel.setVisible(isUserDocent);
         if(isUserDocent){
             thisDay.setPrefWidth(550);
+            toonDag();
         }else{
             thisDay.setPrefWidth(1120);
+            toonWeek();
         }
     }
 
@@ -135,18 +142,57 @@ public class RoosterController {
         setWeek();
     }
 
-    public void setCollege(){
+    public void setCollege() throws IOException {
+        // valt de huidige geselecteerde dag tussen een ziekmelding van een leerling
         RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
         ObservableList<Student> alleStudenten = FXCollections.observableArrayList();
-        System.out.println(thisRegel.getCollege().getKlas());
-        for(Student student : thisRegel.getCollege().getKlas().getStudenten()){
-            PresentieStatus ps = student.getPresentie();
-            if(ps == PresentieStatus.Ziek){
-                alleStudenten.add(0, student);
-            }else{alleStudenten.add(student); }
-            System.out.println(ps);
+        ObservableList<Presentie> aanwezigheidStudenten = FXCollections.observableArrayList();
+        //alle studenten van de klas
+        alleStudenten.addAll(thisRegel.getCollege().getKlas().getStudenten());
+
+        for(Student student : thisRegel.getCollege().getKlas().getStudenten()) {
+            aanwezigheidStudenten.add(getPresenties(student));
         }
-        listCurrentCollege.setItems(alleStudenten);
+//            student.getPresentie();
+//            PresentieStatus ps = student.getPresentie();
+//            if(ps == PresentieStatus.Ziek){
+//                alleStudenten.add(0, student);
+//            }else{alleStudenten.add(student); }
+//        }
+
+        listCurrentCollege.setItems(aanwezigheidStudenten);
+
+        currentCollegeLabel.setText( thisRegel.getCollege() + " " + thisRegel);
+    }
+
+    // is student in klas
+    // valt thisDay onder de begin- en einddatum ziektemelding. Zo ja, new Presentie(student, PresentieStatus.Ziek)
+    // zo nee, new Presentie(student, PresentieStatus.Present)
+    public Presentie getPresenties(Student student) throws IOException {
+        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt");
+        BufferedReader bufferedReader = new BufferedReader(reader);
+        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
+        LocalDate thisDayRegel = thisRegel.getDag();
+        String line; int studentNr; LocalDate startDatum; LocalDate eindDatum; Student currentStudent;
+
+        Presentie presentie = new Presentie(student, PresentieStatus.Present);
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ");
+            studentNr = Integer.parseInt(arrOfStr[1]);
+            startDatum = LocalDate.parse(arrOfStr[2]);
+
+            try { eindDatum = LocalDate.parse(arrOfStr[3]); } catch(Exception e) { eindDatum = LocalDate.now().plusDays(1); }
+
+            if(student.getStudentNr() == studentNr){
+                if(thisDayRegel.compareTo(startDatum) >= 0){
+                    if(thisDayRegel.compareTo(eindDatum) <= 0){
+                        presentie = new Presentie(student, PresentieStatus.Ziek);
+                    }
+                }
+            }
+        }
+        return presentie;
     }
 
     public void setDag(){
@@ -199,7 +245,7 @@ public class RoosterController {
     public void dagVisible(Boolean isDagVisible){
         dagIsVisible = isDagVisible;
         thisDay.setVisible(isDagVisible);
-        listCurrentCollege.setVisible(isDagVisible);
+        listCurrentCollege.setVisible(isDagVisible && isUserDocent);
         for(ListView<RoosterRegel> dag : weekdagen){
             dag.setVisible(!isDagVisible);
         }
