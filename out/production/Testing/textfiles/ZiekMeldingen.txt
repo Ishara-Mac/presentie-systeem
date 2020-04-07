@@ -1,8 +1,3 @@
-null : 13
-2020-04-02 - 2020-04-02
-jan henk : 1
-2020-04-02 - 2020-04-02
-jan henk : 1
-2020-04-03 - 2020-04-03
-jan henk : 1
-2020-04-03 - nog steeds ziek
+ishara macdonald : 1 : 2020-04-07 : 2020-04-07
+ishara macdonald : 1 : 2020-04-07 : 2020-04-07
+ishara macdonald : 1 : 2020-04-07 : 

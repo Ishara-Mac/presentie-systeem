@@ -24,6 +24,8 @@ public class Student extends Gebruiker{
     private static int nextStudNr = 1;
     private static ArrayList<Student> studenten = new ArrayList<>();
 
+    public static void addStudent(Student student){studenten.add(student);}
+
     public Student(String voornaam, String achternaam, String klasStr, String wachtwoord){
         super(voornaam, achternaam, wachtwoord);
         for(Klas klas : getAllKlassen()){
@@ -54,9 +56,8 @@ public class Student extends Gebruiker{
 //        presentie = PresentieStatus.Present;
 //    }
 
-    public ArrayList<Student> getAllStudents(){
-        return studenten;
-    }
+    public static ArrayList<Student> getAllStudents(){
+        return studenten; }
 
     public int getStudentNr(){
         return studentNr;
@@ -89,6 +90,12 @@ public class Student extends Gebruiker{
         }
     }
 
+    public void setPresentie(PresentieStatus ps){
+        this.presentie = ps;
+    }
+
+    public void setHuidigeZiekMelding(ZiekMelding ziekMelding){this.ziekMelding = ziekMelding;}
+
     public void getZiekMeldingen(){
         if(presentie == PresentieStatus.Ziek){
             System.out.println(String.format("%s is vanaf %s ziek en is nog steeds ziek.\n", super.getNaam(), ziekMelding.getBeginDatum()));
@@ -112,17 +119,15 @@ public class Student extends Gebruiker{
             ziekMelding.setEindDatum();
             ziekMeldingen.add(ziekMelding);
             ziekMelding.verwerkZiekmelding();
-
             presentie = PresentieStatus.Present;
         }else{
             this.ziekMelding = new ZiekMelding(this);
-            //ziekMelding.setBeginDatum(date);
             ziekMelding.verwerkZiekmelding();
             presentie = PresentieStatus.Ziek;
         }
     }
 
-//    public String toString(){
-//        return String.format("Naam %s || Wachtwoord %s", super.getNaam(), super.getWachtwoord());
-//    }
+    public String toString(){
+        return String.format("Naam %s || StudentenNr %d ", super.getNaam(), studentNr);
+    }
 }
