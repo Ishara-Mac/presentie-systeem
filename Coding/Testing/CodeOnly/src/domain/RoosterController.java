@@ -4,6 +4,7 @@ import code.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,11 +26,13 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static code.ZiekMelding.readingZiekMeldingen;
 
 public class RoosterController {
+    @FXML private Button allAbsenties;
     @FXML private Button ziekmeldKnop;
 
     @FXML private ListView<Presentie> listCurrentCollege = new ListView<>();
@@ -83,6 +86,7 @@ public class RoosterController {
     public void setUpLayout(){
         listCurrentCollege.setVisible(isUserDocent);
         currentCollegeLabel.setVisible(isUserDocent);
+        allAbsenties.setVisible(!isUserDocent);
         if(isUserDocent){
             thisDay.setPrefWidth(550);
             toonDag();
@@ -170,48 +174,47 @@ public class RoosterController {
     // valt thisDay onder de begin- en einddatum ziektemelding. Zo ja, new Presentie(student, PresentieStatus.Ziek)
     // zo nee, new Presentie(student, PresentieStatus.Present)
     public Presentie getPresentie(Student student) throws IOException {
-        PresentieStatus ps;
-        ps = checkZiekmelding(student);
-        if(ps == PresentieStatus.Present){
+        Presentie ps = checkZiekmelding(student);
+        if(ps.getPresentieStatus() == PresentieStatus.Present){
             ps = checkAfmelding(student);
-            return new Presentie(student, ps);
-        }
-        return new Presentie(student, ps);
-    }
-
-    public PresentieStatus checkZiekmelding(Student student) throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt");
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
-        LocalDate thisDayRegel = thisRegel.getDag();
-        String line; int studentNr; LocalDate startDatum; LocalDate eindDatum;
-        PresentieStatus ps = PresentieStatus.Present;
-
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ");
-            studentNr = Integer.parseInt(arrOfStr[1]);
-            startDatum = LocalDate.parse(arrOfStr[2]);
-
-            try { eindDatum = LocalDate.parse(arrOfStr[3]); } catch(Exception e) { eindDatum = LocalDate.now().plusDays(1); }
-
-            if(student.getStudentNr() == studentNr){
-                if(thisDayRegel.compareTo(startDatum) >= 0){
-                    if(thisDayRegel.compareTo(eindDatum) <= 0){
-                        ps = PresentieStatus.Ziek;
-                    }
-                }
-            }
+            return ps;
         }
         return ps;
     }
 
-    public PresentieStatus checkAfmelding(Student student) throws IOException{
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt");
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
-        LocalDate thisDayRegel = thisRegel.getDag();
+    public Presentie checkZiekmelding(Student student) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt"));
+        RoosterRegel thisDayRegel = thisDay.getSelectionModel().getSelectedItem();
+        String line; int studentNr;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ");
+            studentNr = Integer.parseInt(arrOfStr[1]);
+            College currentCollege = null;
+
+            for (College college : College.getAllCollege()) {
+                if (college.getCode().equals(arrOfStr[3])) {
+                    currentCollege = college;
+                    break;
+                }
+            }
+
+            if (student.getStudentNr() == studentNr) {
+                if (currentCollege != null) {
+                    RoosterRegel currentRegel = new RoosterRegel(LocalDate.parse(arrOfStr[2]), currentCollege, TijdBlok.searchBlok(arrOfStr[4]));
+                    if (thisDayRegel.equals(currentRegel)) {
+                        return new Presentie(student, PresentieStatus.Ziek, "Ziek");
+                    }
+                }
+            }
+        }
+        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
+    }
+
+    public Presentie checkAfmelding(Student student) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt"));
+        LocalDate thisDayRegel = thisDay.getSelectionModel().getSelectedItem().getDag();
         String line; LocalDate eindDatum;
-        PresentieStatus ps = PresentieStatus.Present;
 
         while ((line = bufferedReader.readLine()) != null) {
             String[] arrOfStr = line.split(" : ");
@@ -221,12 +224,12 @@ public class RoosterController {
             if(student.getStudentNr() == Integer.parseInt(arrOfStr[1])){
                 if(thisDayRegel.compareTo(LocalDate.parse(arrOfStr[2])) >= 0){
                     if(thisDayRegel.compareTo(eindDatum) <= 0){
-                        ps = PresentieStatus.Afwezig;
+                        return new Presentie(student, PresentieStatus.Afwezig, arrOfStr[5]);
                     }
                 }
             }
         }
-        return ps;
+        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
     }
 
     public void setDag(){
@@ -319,6 +322,7 @@ public class RoosterController {
         Stage loginStage = new Stage();
         loginStage.setTitle("Login");
         loginStage.setScene(new Scene(root));
+        loginStage.initModality(Modality.APPLICATION_MODAL);
         loginStage.show();
 
         initialize();
@@ -327,12 +331,12 @@ public class RoosterController {
     public void handleAbsentie() throws IOException {
         RoosterRegel regel;
         for(ListView<RoosterRegel> lw : weekdagen){
-            try{
-                regel= lw.getSelectionModel().getSelectedItem();
-                new Afmelding(regel, gebruiker);
+            regel= lw.getSelectionModel().getSelectedItem();
+            if(regel != null){
+                AbsentiePopUpController.setRegel(regel);
                 lw.getSelectionModel().clearSelection();
+                break;
             }
-            catch(Exception ignored){ }
         }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AbsentiePopUp.fxml"));
         Parent root = loader.load();
@@ -345,27 +349,40 @@ public class RoosterController {
         initialize();
     }
 
-    public void handleAbstentieDinsdag(MouseEvent mouseEvent) {
-        RoosterRegel regel= dinsdagListview.getSelectionModel().getSelectedItem();
-        System.out.println(regel.toString());
+    public void toonAbsentieScherm(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Absenties.fxml"));
+        Parent root = loader.load();
 
+        Stage absentieScherm = new Stage();
+        absentieScherm.setTitle("Alle Absenties.");
+        absentieScherm.setScene(new Scene(root));
+        absentieScherm.initModality(Modality.APPLICATION_MODAL);
+        absentieScherm.show();
+
+        initialize();
     }
-    public void handleAbstentieWoensdag(MouseEvent mouseEvent) {
-        RoosterRegel regel= woensdagListview.getSelectionModel().getSelectedItem();
-        System.out.println(regel.toString());
-    }
-
-    public void handleAbstentieDonderdag(MouseEvent mouseEvent) {
-        RoosterRegel regel= donderdagListview.getSelectionModel().getSelectedItem();
-        System.out.println(regel.toString());
-    }
-
-    public void handleAbstentieVrijdag(MouseEvent mouseEvent) {
-        RoosterRegel regel= vrijdagListview.getSelectionModel().getSelectedItem();
-        System.out.println(regel.toString());
-    }
-
-
+//
+//    public void handleAbstentieDinsdag(MouseEvent mouseEvent) {
+//        RoosterRegel regel= dinsdagListview.getSelectionModel().getSelectedItem();
+//        System.out.println(regel.toString());
+//
+//    }
+//    public void handleAbstentieWoensdag(MouseEvent mouseEvent) {
+//        RoosterRegel regel= woensdagListview.getSelectionModel().getSelectedItem();
+//        System.out.println(regel.toString());
+//    }
+//
+//    public void handleAbstentieDonderdag(MouseEvent mouseEvent) {
+//        RoosterRegel regel= donderdagListview.getSelectionModel().getSelectedItem();
+//        System.out.println(regel.toString());
+//    }
+//
+//    public void handleAbstentieVrijdag(MouseEvent mouseEvent) {
+//        RoosterRegel regel= vrijdagListview.getSelectionModel().getSelectedItem();
+//        System.out.println(regel.toString());
+//    }
+//
+//
 //    gebruiker.ziekMelden(Date.valueOf( LocalDate.now()));
 //    setZiekMeldKnop();
 //    gebruiker.getZiekMeldingen();

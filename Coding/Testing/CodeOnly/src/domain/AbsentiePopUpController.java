@@ -1,8 +1,6 @@
 package domain;
 
-import code.Presentie;
-import code.PresentieStatus;
-import code.Student;
+import code.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -11,17 +9,21 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class AbsentiePopUpController {
     @FXML private Button confirmButton;
     @FXML private Label informationLabel;
     @FXML private TextArea redenTextArea;
 
-    private Student student;
+    private Student student = (Student) Rooster.getCurrentUser();
+    private static RoosterRegel regel;
 
-    public void initialize(Student student) {
+    public void initialize() {
         setLayout();
-        this.student = student;
     }
+
+    public static void setRegel(RoosterRegel regel){AbsentiePopUpController.regel = regel;}
 
     public void setLayout(){
         informationLabel.setMaxWidth(Double.MAX_VALUE);
@@ -30,12 +32,11 @@ public class AbsentiePopUpController {
         informationLabel.setAlignment(Pos.CENTER);
     }
 
-    public void confirmButton(){ backToRooster(); }
-
-    public void backToRooster() {
+    public void confirmButton() throws IOException {
         String reden = redenTextArea.getText();
         if(reden.isEmpty() || reden.equals(" ")){ reden = "Geen reden gegeven"; }
-        new Presentie(student, PresentieStatus.Afwezig, reden);
+        Afmelding am = new Afmelding(regel, student, reden);
+        System.out.println(am);
 
         Stage stage = (Stage) confirmButton.getScene().getWindow();
         stage.close();

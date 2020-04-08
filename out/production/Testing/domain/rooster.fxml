@@ -10,7 +10,8 @@
 
 <AnchorPane prefHeight="763.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="domain.RoosterController">
     <children>
-        <Button fx:id="ziekmeldKnop" layoutX="545.0" layoutY="90.0" mnemonicParsing="false" onAction="#toonZiekMeldScherm" prefHeight="25.0" prefWidth="228.0" visible="FALSE" />
+        <Button fx:id="allAbsenties" onAction="#toonAbsentieScherm" layoutX="52.0" layoutY="91.0" mnemonicParsing="false" text="Alle Absenties" visible="false" />
+        <Button fx:id="ziekmeldKnop" layoutX="545.0" layoutY="90.0" mnemonicParsing="false" onAction="#toonZiekMeldScherm" prefHeight="25.0" prefWidth="228.0" visible="false" />
         <Label layoutX="945.0" layoutY="30.0" prefHeight="39.0" prefWidth="99.0" text="datum:" textAlignment="CENTER" />
         <DatePicker fx:id="huidigeDatum" layoutX="994.0" layoutY="30.0" prefHeight="39.0" prefWidth="149.0" />
 
@@ -42,11 +43,11 @@
         <Label fx:id="donderdagLabel" layoutX="713.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
         <Label fx:id="vrijdagLabel" layoutX="945.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
 
-        <ListView fx:id="maandagListview" onMouseClicked="#handleAbsentie" layoutX="32.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="dinsdagListview" onMouseClicked="#handleAbsentie" layoutX="258.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="woensdagListview" onMouseClicked="#handleAbsentie" layoutX="486.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="donderdagListview" onMouseClicked="#handleAbsentie" layoutX="714.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
-        <ListView fx:id="vrijdagListview" onMouseClicked="#handleAbsentie" layoutX="945.0" layoutY="163.0" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="maandagListview" layoutX="32.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="dinsdagListview" layoutX="258.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="woensdagListview" layoutX="486.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="donderdagListview" layoutX="714.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
+        <ListView fx:id="vrijdagListview" layoutX="945.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
       <Button layoutX="18.0" layoutY="18.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
       <Label fx:id="currentCollegeLabel" layoutX="586.0" layoutY="95.0" prefHeight="17.0" prefWidth="404.0" visible="false" />
 

@@ -67,6 +67,21 @@ public class RoosterRegel {
         reader.close();
     }
 
+    public boolean equals(Object andereObject){
+        boolean isGelijk = false;
+
+        if(andereObject instanceof RoosterRegel){
+            RoosterRegel ownedGame = (RoosterRegel) andereObject;
+            if(this.dag.compareTo(ownedGame.dag) == 0 &&
+                    this.college.getCode().equals(ownedGame.college.getCode()) &&
+                    this.tijdBlok.getBlok().equals(ownedGame.tijdBlok.getBlok())){
+                isGelijk = true;
+            }
+        }
+
+        return isGelijk;
+    }
+
     public String toString(){
         return String.format("%s    %s\n\n%s\n",dag, tijdBlok, college);}
 }

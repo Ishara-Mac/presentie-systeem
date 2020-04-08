@@ -4,7 +4,6 @@ package code;
 import java.util.ArrayList;
 
 public class Presentie {
-    private static ArrayList<Presentie> presenties;
     Student student;
     PresentieStatus presentieStatus;
     String reden;
