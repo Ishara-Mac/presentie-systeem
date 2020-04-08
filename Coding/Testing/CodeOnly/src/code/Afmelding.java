@@ -1,17 +1,26 @@
 package code;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Afmelding {
-    private College les;
     private RoosterRegel regel;
     private Student student;
 
-    public Afmelding(College les, Student student){
-        this.les = les;
+    public Afmelding(RoosterRegel regel, Student student) throws IOException {
+        this.regel = regel;
         this.student = student;
+
+        writeAbsentie();
+    }
+
+    public void writeAbsentie() throws IOException {
+        FileWriter writer=new FileWriter("Coding/Testing/CodeOnly/src/textfiles/Absenties.txt");
+        writer.write(String.format("%s : %s : %s : %s : %s", student.getNaam(), student.getStudentNr(), regel.getDag(), regel.getCollege(), regel.getTijd()));
     }
 
     public String toString(){
-        return String.format("Van %s tijdens het %s %s was %s afwezig.\n", regel.getTijd(), les.getType(), les.getNaam(), student.getNaam());
+        return String.format("Van %s tijdens het %s was %s afwezig.\n", regel.getTijd(), regel.getCollege(), student.getNaam());
     }
 
 }

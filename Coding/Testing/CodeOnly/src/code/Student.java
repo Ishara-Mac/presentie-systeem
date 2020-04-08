@@ -62,9 +62,7 @@ public class Student extends Gebruiker{
     public int getStudentNr(){
         return studentNr;
     }
-    public Klas getKlas(){
-        return klas;
-    }
+    public Klas getKlas(){ return klas; }
     public PresentieStatus getPresentie(){return presentie;}
 
     @Override
@@ -108,11 +106,11 @@ public class Student extends Gebruiker{
         }
     }
 
-    public void voegAfmeldingToe(College college){
-        Afmelding afmelding = new Afmelding(college, this);
-        if(!afmeldingen.contains(afmelding)){afmeldingen.add(afmelding);}
-        else{System.out.println("Je bent al afgemeld voor college" + college);}
-    }
+//    public void voegAfmeldingToe(College college){
+//        Afmelding afmelding = new Afmelding(this, this);
+//        if(!afmeldingen.contains(afmelding)){afmeldingen.add(afmelding);}
+//        else{System.out.println("Je bent al afgemeld voor college" + college);}
+//    }
 
     public void ziekMelden() throws IOException {
         if(presentie == PresentieStatus.Ziek){
