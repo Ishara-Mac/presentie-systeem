@@ -15,6 +15,7 @@ public class LoginApp extends Application {
         Gebruiker.setAllUsers();
         College.procesCollege();
         RoosterRegel.procesRooster();
+        Afmelding.procesAfmeldingen();
         launch(args);
     }
 
