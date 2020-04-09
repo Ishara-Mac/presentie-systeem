@@ -29,7 +29,6 @@ public class AbsentiesController {
             String line = scan.nextLine();
             if (line.contains(Rooster.getCurrentUser().getNaam())) {
                 absentiesVanStudent.add(line + " : afwezig");
-                System.out.println(line);
             }
         }
 
@@ -40,7 +39,6 @@ public class AbsentiesController {
             String line2 = scan2.nextLine();
             if (line2.contains(Rooster.getCurrentUser().getNaam())) {
                 absentiesVanStudent.add(line2 + " : ziek" );
-                System.out.println(line2);
             }
         }
         AbsentieLijst.getItems().addAll(absentiesVanStudent);

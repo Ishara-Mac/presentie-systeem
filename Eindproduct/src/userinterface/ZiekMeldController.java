@@ -49,7 +49,6 @@ public class ZiekMeldController implements Initializable {
 
     public void confirmButton() throws IOException {
         gebruiker.ziekMelden();
-        System.out.println(gebruiker.getPresentie());
         backToRooster();
     }
 

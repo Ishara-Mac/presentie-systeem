@@ -44,10 +44,8 @@ public class ZiekMelding {
                     currentStudent = student;
                 }
             }
-            System.out.println(currentStudent);
 
             if(arrOfStr.length < 4){
-                System.out.println("hey");
                 if(currentStudent != null){
                     currentStudent.setPresentie(PresentieStatus.Ziek);
                     currentStudent.setHuidigeZiekMelding(new ZiekMelding(currentStudent, startDatum));
@@ -63,11 +61,9 @@ public class ZiekMelding {
      */
     public void verwerkZiekmelding() throws IOException {
         if(student.getPresentie() == PresentieStatus.Ziek){
-            System.out.println("Verwerk Betermelding");
             writingZiekmeldingen();
         }
         else{
-            System.out.println("Add Ziekmelding");
             FileWriter fr = new FileWriter(file, true);
             fr.write(String.format("%s : %s : %s : \r\n", student.getNaam(), student.getStudentNr(), LocalDate.now()));
             fr.close();
