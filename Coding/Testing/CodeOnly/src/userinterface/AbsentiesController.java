@@ -13,8 +13,7 @@ import java.util.Scanner;
 public class AbsentiesController {
     ObservableList<String> absentiesVanStudent = FXCollections.observableArrayList();
 
-    @FXML
-    private ListView<String> AbsentieLijst;
+    @FXML private ListView<String> AbsentieLijst;
 
     public void initialize() throws FileNotFoundException {
         loadData();

@@ -11,7 +11,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -21,8 +20,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.temporal.WeekFields;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.Date;
 import java.util.Locale;
 
 import static domain.ZiekMelding.readingZiekMeldingen;
@@ -57,16 +54,9 @@ public class RoosterController {
     private boolean isUserDocent;
 
     LocalDate vandaag = LocalDate.now();
-    String dayOfWeek;
 
     public void initialize() throws IOException {
         readingZiekMeldingen();
-
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(Date.valueOf(vandaag));
-
-        dayOfWeek = vandaag.getDayOfWeek().toString();
-
         huidigeDatum.setValue(vandaag);
         setWeekdagen();
 
@@ -94,6 +84,26 @@ public class RoosterController {
         }
     }
 
+    public void dagVisible(Boolean isDagVisible){
+        dagIsVisible = isDagVisible;
+        thisDay.setVisible(isDagVisible);
+        listCurrentCollege.setVisible(isDagVisible && isUserDocent);
+        for(ListView<RoosterRegel> dag : weekdagen){
+            dag.setVisible(!isDagVisible);
+        }
+        for(Label dag : weekDagLabels){
+            dag.setVisible(!isDagVisible);
+        }
+    }
+
+    public void setZiekMeldKnop(){
+        ziekmeldKnop.setVisible(true);
+        if(gebruiker.getPresentie() == PresentieStatus.Ziek){
+            ziekmeldKnop.setText("Beter melden");
+        }
+        else{ ziekmeldKnop.setText("Ziek Melden"); }
+    }
+
     public void setWeekdagen(){
         weekDagLabels.add(maandagLabel);
         weekDagLabels.add(dinsdagLabel);
@@ -106,105 +116,6 @@ public class RoosterController {
         weekdagen.add(woensdagListview);
         weekdagen.add(donderdagListview);
         weekdagen.add(vrijdagListview);
-    }
-
-    public void toonVorigeDag() {
-        if(dagIsVisible){
-            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
-            setDag();
-        }
-        else{
-            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(7));
-            setWeek();
-        }
-    }
-
-    public void toonVandaag() {
-        huidigeDatum.setValue(vandaag);
-        if(dagIsVisible){ setDag(); }else{ setWeek(); }
-    }
-
-    public void toonVolgendeDag() {
-        if(dagIsVisible){
-            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
-            setDag();
-        }
-        else{
-            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(7));
-            setWeek();
-        }
-    }
-
-    public void toonDag() {
-        dagVisible(true);
-        setDag();
-    }
-
-    public void toonWeek() {
-        dagVisible(false);
-        setWeek();
-    }
-
-    public void setCollege() throws IOException {
-        // valt de huidige geselecteerde dag tussen een ziekmelding van een leerling?
-        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
-        ObservableList<Student> alleStudenten = FXCollections.observableArrayList();
-        ObservableList<Presentie> aanwezigheidStudenten = FXCollections.observableArrayList();
-        //krijgt alle studenten van de klas
-        alleStudenten.addAll(thisRegel.getCollege().getKlas().getStudenten());
-
-        for(Student student : alleStudenten) { aanwezigheidStudenten.add(getPresentie(student)); }
-
-        listCurrentCollege.setItems(aanwezigheidStudenten);
-        currentCollegeLabel.setText( thisRegel.getCollege() + " " + thisRegel);
-    }
-
-    // is student in klas
-    // valt thisDay onder de begin- en einddatum ziektemelding. Zo ja, new Presentie(student, PresentieStatus.Ziek)
-    // zo nee, new Presentie(student, PresentieStatus.Present)
-    public Presentie getPresentie(Student student) throws IOException {
-        Presentie ps = checkZiekmelding(student);
-        if(ps.getPresentieStatus() == PresentieStatus.Present){
-            ps = checkAfmelding(student);
-            return ps;
-        }
-        return ps;
-    }
-
-    public Presentie checkZiekmelding(Student student) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt"));
-        LocalDate thisDayDate = thisDay.getSelectionModel().getSelectedItem().getDag();
-        String line; LocalDate eindDatum;
-
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ");
-            try { eindDatum = LocalDate.parse(arrOfStr[3]); } catch(Exception e) { eindDatum = LocalDate.now().plusDays(1); }
-
-            if(student.getStudentNr() == Integer.parseInt(arrOfStr[1])){
-                if(thisDayDate.compareTo(LocalDate.parse(arrOfStr[2])) >= 0){
-                    if(thisDayDate.compareTo(eindDatum) <= 0){
-                        return new Presentie(student, PresentieStatus.Ziek, "Ziek");
-                    }
-                }
-            }
-        }
-        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
-    }
-
-    public Presentie checkAfmelding(Student student) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt"));
-        LocalDate thisDayRegel = thisDay.getSelectionModel().getSelectedItem().getDag();
-        String line;
-
-        while ((line = bufferedReader.readLine()) != null) {
-            String[] arrOfStr = line.split(" : ");
-            if(student.getStudentNr() == Integer.parseInt(arrOfStr[1])){
-                if(thisDayRegel.compareTo(LocalDate.parse(arrOfStr[2])) == 0){
-                    return new Presentie(student, PresentieStatus.Afwezig, arrOfStr[5]);
-                }
-            }
-        }
-        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
     }
 
     public void setDag(){
@@ -254,24 +165,104 @@ public class RoosterController {
         }
     }
 
-    public void dagVisible(Boolean isDagVisible){
-        dagIsVisible = isDagVisible;
-        thisDay.setVisible(isDagVisible);
-        listCurrentCollege.setVisible(isDagVisible && isUserDocent);
-        for(ListView<RoosterRegel> dag : weekdagen){
-            dag.setVisible(!isDagVisible);
+    public void toonDag() {
+        dagVisible(true);
+        setDag();
+    }
+
+    public void toonWeek() {
+        dagVisible(false);
+        setWeek();
+    }
+
+    public void toonVorigeDag() {
+        if(dagIsVisible){
+            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
+            setDag();
         }
-        for(Label dag : weekDagLabels){
-            dag.setVisible(!isDagVisible);
+        else{
+            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(7));
+            setWeek();
         }
     }
 
-    public void setZiekMeldKnop(){
-        ziekmeldKnop.setVisible(true);
-        if(gebruiker.getPresentie() == PresentieStatus.Ziek){
-            ziekmeldKnop.setText("Beter melden");
+    public void toonVandaag() {
+        huidigeDatum.setValue(vandaag);
+        if(dagIsVisible){ setDag(); }else{ setWeek(); }
+    }
+
+    public void toonVolgendeDag() {
+        if(dagIsVisible){
+            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
+            setDag();
         }
-        else{ ziekmeldKnop.setText("Ziek Melden"); }
+        else{
+            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(7));
+            setWeek();
+        }
+    }
+
+    public void setCollege() throws IOException {
+        // valt de huidige geselecteerde dag tussen een ziekmelding van een leerling?
+        RoosterRegel thisRegel = thisDay.getSelectionModel().getSelectedItem();
+        ObservableList<Student> alleStudenten = FXCollections.observableArrayList();
+        ObservableList<Presentie> aanwezigheidStudenten = FXCollections.observableArrayList();
+        //krijgt alle studenten van de klas
+        alleStudenten.addAll(thisRegel.getCollege().getKlas().getStudenten());
+
+        for(Student student : alleStudenten) { aanwezigheidStudenten.add(getPresentie(student)); }
+
+        listCurrentCollege.setItems(aanwezigheidStudenten);
+        currentCollegeLabel.setText( thisRegel.getCollege() + " " + thisRegel);
+    }
+
+    /*
+    zit student huidige in klas?
+    valt thisDay onder de begin- en einddatum ziektemelding. Zo ja, new Presentie(student, PresentieStatus.Ziek)
+    zo nee, new Presentie(student, PresentieStatus.Present)*/
+    public Presentie getPresentie(Student student) throws IOException {
+        Presentie ps = checkZiekmelding(student);
+        if(ps.getPresentieStatus() == PresentieStatus.Present){
+            ps = checkAfmelding(student);
+            return ps;
+        }
+        return ps;
+    }
+
+    public Presentie checkZiekmelding(Student student) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt"));
+        LocalDate thisDayDate = thisDay.getSelectionModel().getSelectedItem().getDag();
+        String line; LocalDate eindDatum;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ");
+            try { eindDatum = LocalDate.parse(arrOfStr[3]); } catch(Exception e) { eindDatum = LocalDate.now().plusDays(1); }
+
+            if(student.getStudentNr() == Integer.parseInt(arrOfStr[1])){
+                if(thisDayDate.compareTo(LocalDate.parse(arrOfStr[2])) >= 0){
+                    if(thisDayDate.compareTo(eindDatum) <= 0){
+                        return new Presentie(student, PresentieStatus.Ziek, "Ziek");
+                    }
+                }
+            }
+        }
+        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
+    }
+
+    public Presentie checkAfmelding(Student student) throws IOException{
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt"));
+        LocalDate thisDayRegel = thisDay.getSelectionModel().getSelectedItem().getDag();
+        String line;
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] arrOfStr = line.split(" : ");
+            if(student.getStudentNr() == Integer.parseInt(arrOfStr[1])){
+                if(thisDayRegel.compareTo(LocalDate.parse(arrOfStr[2])) == 0){
+                    return new Presentie(student, PresentieStatus.Afwezig, arrOfStr[5]);
+                }
+            }
+        }
+        return new Presentie(student, PresentieStatus.Present, "Aanwezig.");
     }
 
     public void toonZiekMeldScherm() throws IOException {
@@ -283,22 +274,6 @@ public class RoosterController {
         ziekmeldStage.setScene(new Scene(root));
         ziekmeldStage.initModality(Modality.APPLICATION_MODAL);
         ziekmeldStage.showAndWait();
-
-        initialize();
-    }
-
-    public void logOut() throws IOException {
-        Stage stage = (Stage) ziekmeldKnop.getScene().getWindow();
-        stage.close();
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
-        Parent root = loader.load();
-
-        Stage loginStage = new Stage();
-        loginStage.setTitle("Login");
-        loginStage.setScene(new Scene(root));
-        loginStage.initModality(Modality.APPLICATION_MODAL);
-        loginStage.show();
 
         initialize();
     }
@@ -333,6 +308,22 @@ public class RoosterController {
         absentieScherm.setScene(new Scene(root));
         absentieScherm.initModality(Modality.APPLICATION_MODAL);
         absentieScherm.show();
+
+        initialize();
+    }
+
+    public void logOut() throws IOException {
+        Stage stage = (Stage) ziekmeldKnop.getScene().getWindow();
+        stage.close();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+        Parent root = loader.load();
+
+        Stage loginStage = new Stage();
+        loginStage.setTitle("Login");
+        loginStage.setScene(new Scene(root));
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+        loginStage.show();
 
         initialize();
     }

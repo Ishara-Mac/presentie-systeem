@@ -19,7 +19,7 @@ public class Klas {
     Ook wordt deze klas bij alle klassen toegevoegd en - doormiddel van de gegeven data in een tekstfile -
     worden de bijbehorende studenten toegevoegd.
      */
-    public Klas(String klasNaam) throws IOException{
+    public Klas(String klasNaam){
         this.klasNaam = klasNaam;
         this.klasNr = nextKlasNr;
 
@@ -41,7 +41,6 @@ public class Klas {
         }
         reader.close();
     }
-
 
     public void addStudent(Student student){studenten.add(student);}
 

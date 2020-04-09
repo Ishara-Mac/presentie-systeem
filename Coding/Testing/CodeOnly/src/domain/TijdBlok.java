@@ -17,17 +17,6 @@ public enum TijdBlok {
         this.eindTijd= eindTijd;
     }
 
-    public static TijdBlok searchBlok(String string){
-        if(string.equals(ochtendBlok.bloknaam)){
-            return ochtendBlok;
-        }else if(string.equals(lunchBlok.bloknaam)){
-            return lunchBlok;
-        }else if(string.equals(middagBlok.bloknaam)){
-            return middagBlok;
-        }else{
-            return null;
-        }
-    }
     public String getBlok(){return bloknaam;}
 
     public String toString(){

@@ -24,13 +24,17 @@ public class Student extends Gebruiker{
         nextStudNr++;
         presentie = PresentieStatus.Present;
     }
-    public static ArrayList<Student> getAllStudents(){
-        return studenten; }
 
+    public static ArrayList<Student> getAllStudents(){ return studenten; }
     public int getStudentNr(){
         return studentNr;
     }
     public PresentieStatus getPresentie(){return presentie;}
+
+    public void setPresentie(PresentieStatus ps){
+        this.presentie = ps;
+    }
+    public void setHuidigeZiekMelding(ZiekMelding ziekMelding){this.ziekMelding = ziekMelding;}
 
     @Override
     public ArrayList<RoosterRegel> procesRooster(){
@@ -43,12 +47,6 @@ public class Student extends Gebruiker{
         }
         return regels;
     }
-
-    public void setPresentie(PresentieStatus ps){
-        this.presentie = ps;
-    }
-
-    public void setHuidigeZiekMelding(ZiekMelding ziekMelding){this.ziekMelding = ziekMelding;}
 
     public void ziekMelden() throws IOException {
         if(presentie == PresentieStatus.Ziek){

@@ -7,7 +7,7 @@ public enum CollegeType {
 
     private final String type;
 
-    private CollegeType(String type) {
+    CollegeType(String type) {
         this.type = type;
     }
 

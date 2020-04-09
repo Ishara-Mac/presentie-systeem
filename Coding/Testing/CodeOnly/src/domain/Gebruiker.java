@@ -8,6 +8,19 @@ import java.util.ArrayList;
 public class Gebruiker{
     private static ArrayList<Gebruiker> allUsers = new ArrayList<>();
 
+    private String naam;
+    private String wachtwoord;
+    private String email = "hu.nl";
+
+    public Gebruiker(String voornaam, String achternaam, String wachtwoord){
+        this.naam = voornaam + " " + achternaam;
+        if(this instanceof Student){
+            email = "student." + email;
+        }
+        this.email = String.format("%s.%s@%s", voornaam, achternaam, email);
+        this.wachtwoord = wachtwoord;
+    }
+
     public static void setAllUsers() {
         try {
             FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/InlogGegevens");
@@ -50,19 +63,6 @@ public class Gebruiker{
     }
 
     public static ArrayList<Gebruiker> getAllUsers(){ return allUsers; }
-
-    private String naam;
-    private String wachtwoord;
-    private String email = "hu.nl";
-
-    public Gebruiker(String voornaam, String achternaam, String wachtwoord){
-        this.naam = voornaam + " " + achternaam;
-        if(this instanceof Student){
-            email = "student." + email;
-        }
-        this.email = String.format("%s.%s@%s", voornaam, achternaam, email);
-        this.wachtwoord = wachtwoord;
-    }
 
     public String getNaam(){return naam;}
     public String getWachtwoord() { return wachtwoord; }

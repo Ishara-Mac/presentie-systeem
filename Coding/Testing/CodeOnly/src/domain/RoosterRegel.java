@@ -9,14 +9,12 @@ import java.util.ArrayList;
 public class RoosterRegel {
     private LocalDate dag;
     private College college;
-    private Klas klas;
     private TijdBlok tijdBlok;
     private static ArrayList<RoosterRegel> regels = new ArrayList<>();
 
     public RoosterRegel(LocalDate dag, College college, TijdBlok tijdBlok) {
         this.dag = dag;
         this.college = college;
-        this.klas = college.getKlas();
         this.tijdBlok = tijdBlok;
     }
 
@@ -76,5 +74,5 @@ public class RoosterRegel {
     }
 
     public String toString(){
-        return String.format("%s    %s\n\n%s\n",dag, tijdBlok, college);}
+        return String.format("%s %s\n\n%s\n",dag, tijdBlok, college);}
 }
