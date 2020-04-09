@@ -58,10 +58,17 @@ public class Afmelding {
 
             if( huidigeDatum != null && currentStud != null && rr!= null){
                 Afmelding am = new Afmelding(rr, currentStud ,arrOfStr[5]);
-                System.out.println(am);
+                afmeldingen.add(am);
             }
         }
         reader.close();
+
+        for(Afmelding am : getAfmeldingen()){
+            FileWriter fw = new FileWriter("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt", true);
+            fw.write(String.format("%s : %s : %s : %s : %s : %s\r\n", am.student.getNaam(), am.student.getStudentNr(), am.regel.getDag(), am.regel.getCollege().getCode(), am.regel.getTijd().getBlok(), am.reden));
+            fw.close();
+        }
+
     }
 
     public void addAbsentie() throws IOException {
@@ -82,10 +89,7 @@ public class Afmelding {
                 isGelijk = true;
             }
         }
-
         return isGelijk;
-
-
     }
 
     public String toString(){

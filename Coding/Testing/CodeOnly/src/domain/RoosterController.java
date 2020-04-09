@@ -32,6 +32,7 @@ import java.util.Locale;
 import static code.ZiekMelding.readingZiekMeldingen;
 
 public class RoosterController {
+    @FXML private Label loginNaam;
     @FXML private Button allAbsenties;
     @FXML private Button ziekmeldKnop;
 
@@ -81,6 +82,7 @@ public class RoosterController {
             setZiekMeldKnop();
         }
         setUpLayout();
+        loginNaam.setText(String.format("Momenteel ingelogd als: %s",Rooster.getCurrentUser().getNaam()));
     }
 
     public void setUpLayout(){

@@ -3,7 +3,6 @@ package domain;
 import code.*;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.SceneAntialiasing;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -22,11 +21,11 @@ public class AbsentiePopUpController {
     @FXML private TextArea redenTextArea;
 
     private Student student = (Student) Rooster.getCurrentUser();
-    private String labelText = "";
+    private String labelText = String.format("Wil jij je afmelden voor college %s? Wat is je reden?", regel.getCollege().getNaam());
     private static RoosterRegel regel;
 
 
-    public void initialize() throws IOException {
+    public void initialize(){
         setValidationAfmelding();
         setLayout();
         setText();
@@ -40,6 +39,7 @@ public class AbsentiePopUpController {
                 labelText = String.format("Je hebt je al afgemeld voor college %s.", regel.getCollege().getNaam());
                 cancelButton.setText("Ok");
                 confirmButton.setVisible(false);
+                redenTextArea.setVisible(false);
                 break;
             }else{
                 labelText = String.format("Wil jij je afmelden voor college %s? Wat is je reden?", regel.getCollege().getNaam());
@@ -50,6 +50,7 @@ public class AbsentiePopUpController {
             labelText = "Je kant je niet afmelden voor een college in het verleden.";
             cancelButton.setText("Ok");
             confirmButton.setVisible(false);
+            redenTextArea.setVisible(false);
         }
     }
 
