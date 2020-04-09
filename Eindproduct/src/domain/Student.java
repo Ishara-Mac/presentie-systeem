@@ -2,7 +2,7 @@ package domain;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+ 
 public class Student extends Gebruiker{
     private int studentNr;
     private Klas klas;

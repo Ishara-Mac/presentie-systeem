@@ -4,14 +4,10 @@ import java.util.ArrayList;
 
 public class Docent extends Gebruiker{
     private int docentNr;
+    private ArrayList<College> colleges = new ArrayList<>();
 
     private static int nextDocNr = 1;
     private static ArrayList<Docent> docenten = new ArrayList<>();
-
-    public static ArrayList<Docent> getDocenten(){return docenten;}
-    public static void addDocent(Docent docent){docenten.add(docent);}
-
-    private ArrayList<College> colleges = new ArrayList<>();
 
     public Docent(String voorletter, String achternaam, String wachtwoord){
         super(voorletter, achternaam, wachtwoord);
@@ -20,6 +16,9 @@ public class Docent extends Gebruiker{
         this.docentNr = nextDocNr;
         nextDocNr++;
     }
+
+    public static ArrayList<Docent> getDocenten(){return docenten;}
+    public static void addDocent(Docent docent){docenten.add(docent);}
 
     public void addCollege(College college){colleges.add((college));}
     public int getDocentNr(){return docentNr;}

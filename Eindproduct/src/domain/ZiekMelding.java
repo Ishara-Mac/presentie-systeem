@@ -9,7 +9,7 @@ public class ZiekMelding {
     private LocalDate eindDatum = null;
     private Student student;
 
-    private File file = new File("Coding\\Testing\\CodeOnly\\src\\textfiles\\ZiekMeldingen.txt");
+    private File file = new File("src/textfiles/ZiekMeldingen.txt");
 
     public ZiekMelding(Student student){
         this.student = student;
