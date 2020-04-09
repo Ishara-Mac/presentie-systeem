@@ -38,11 +38,11 @@
         <ListView fx:id="thisDay" layoutX="18.0" layoutY="135.0" onMouseClicked="#setCollege" prefHeight="602.0" prefWidth="550.0" />
         <ListView fx:id="listCurrentCollege" layoutX="589.0" layoutY="135.0" prefHeight="602.0" prefWidth="550.0" />
 
-        <Label fx:id="maandagLabel"   onMouseClicked="#handleAbstentie" layoutX="32.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
-        <Label fx:id="dinsdagLabel" layoutX="258.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
-        <Label fx:id="woensdagLabel" layoutX="486.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
-        <Label fx:id="donderdagLabel" layoutX="713.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
-        <Label fx:id="vrijdagLabel" layoutX="945.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
+        <Label fx:id="maandagLabel"   onMouseClicked="#handleAbsentie" layoutX="32.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="maandag" textAlignment="CENTER" visible="false" />
+        <Label fx:id="dinsdagLabel" onMouseClicked="#handleAbsentie" layoutX="258.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="dinsdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="woensdagLabel" onMouseClicked="#handleAbsentie" layoutX="486.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="woensdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="donderdagLabel" onMouseClicked="#handleAbsentie" layoutX="713.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="donderdag" textAlignment="JUSTIFY" visible="false" />
+        <Label fx:id="vrijdagLabel" onMouseClicked="#handleAbsentie" layoutX="945.0" layoutY="118.0" prefHeight="39.0" prefWidth="200.0" text="vrijdag" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" visible="false" />
 
         <ListView fx:id="maandagListview" layoutX="32.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
         <ListView fx:id="dinsdagListview" layoutX="258.0" layoutY="163.0" onMouseClicked="#handleAbsentie" prefHeight="586.0" prefWidth="200.0" visible="false" />
