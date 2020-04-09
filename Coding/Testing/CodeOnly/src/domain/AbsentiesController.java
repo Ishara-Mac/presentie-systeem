@@ -8,7 +8,6 @@ import javafx.scene.control.ListView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
 public class AbsentiesController {
@@ -44,7 +43,6 @@ public class AbsentiesController {
                 System.out.println(line2);
             }
         }
-        //java.util.Collections.sort(list);
         AbsentieLijst.getItems().addAll(absentiesVanStudent);
     }
 }
