@@ -60,10 +60,11 @@ public class RoosterController {
     private boolean isUserDocent;
 
     LocalDate vandaag = LocalDate.now();
+    LocalDate huidigeDag = vandaag;
 
     public void initialize() throws IOException {
         readingZiekMeldingen();
-        huidigeDatum.setValue(vandaag);
+        huidigeDatum.setValue(huidigeDag);
         setWeekdagen();
 
         if(Rooster.getCurrentUser() instanceof Docent){
@@ -184,27 +185,32 @@ public class RoosterController {
 
     public void toonVorigeDag() {
         if(dagIsVisible){
-            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(1));
+            huidigeDag = huidigeDag.minusDays(1);
+            huidigeDatum.setValue( huidigeDag);
             setDag();
         }
         else{
-            huidigeDatum.setValue( huidigeDatum.getValue().minusDays(7));
+            huidigeDag = huidigeDag.minusDays(7);
+            huidigeDatum.setValue(huidigeDag);
             setWeek();
         }
     }
 
     public void toonVandaag() {
+        huidigeDag = vandaag;
         huidigeDatum.setValue(vandaag);
         if(dagIsVisible){ setDag(); }else{ setWeek(); }
     }
 
     public void toonVolgendeDag() {
         if(dagIsVisible){
-            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(1));
+            huidigeDag = huidigeDag.plusDays(1);
+            huidigeDatum.setValue( huidigeDag);
             setDag();
         }
         else{
-            huidigeDatum.setValue( huidigeDatum.getValue().plusDays(7));
+            huidigeDag = huidigeDag.plusDays(7);
+            huidigeDatum.setValue( huidigeDag);
             setWeek();
         }
     }
