@@ -21,25 +21,23 @@ public class AbsentiesController {
 
     private void loadData() throws FileNotFoundException {
         absentiesVanStudent.clear();
-        File afwezigheid = new File("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt");
+        File afwezigheid = new File("Development/Testing/CodeOnly/src/textfiles/Afmeldingen.txt");
         Scanner scan = new Scanner(afwezigheid);
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
             if (line.contains(Rooster.getCurrentUser().getNaam())) {
                 absentiesVanStudent.add(line + " : afwezig");
-                System.out.println(line);
             }
         }
 
-        File absentieLijst = new File("Coding/Testing/CodeOnly/src/textfiles/Ziekmeldingen.txt");
+        File absentieLijst = new File("Development/Testing/CodeOnly/src/textfiles/Ziekmeldingen.txt");
         Scanner scan2 = new Scanner(absentieLijst);
 
         while (scan2.hasNextLine()) {
             String line2 = scan2.nextLine();
             if (line2.contains(Rooster.getCurrentUser().getNaam())) {
                 absentiesVanStudent.add(line2 + " : ziek" );
-                System.out.println(line2);
             }
         }
         AbsentieLijst.getItems().addAll(absentiesVanStudent);

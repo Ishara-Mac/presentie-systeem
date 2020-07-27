@@ -23,7 +23,7 @@ public class Gebruiker{
 
     public static void setAllUsers() {
         try {
-            FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/InlogGegevens");
+            FileReader reader = new FileReader("Development/Testing/CodeOnly/src/textfiles/InlogGegevens");
             BufferedReader bufferedReader = new BufferedReader(reader);
             String line;
 

@@ -8,6 +8,8 @@ public class Afmelding {
     private RoosterRegel regel;
     private Student student;
     private String reden;
+
+    private static String pathNameAbsences = "Development/Testing/CodeOnly/src/textfiles/Afmeldingen.txt";
     private static ArrayList<Afmelding> afmeldingen = new ArrayList<>();
 
     public Afmelding(RoosterRegel regel, Student student){
@@ -24,7 +26,7 @@ public class Afmelding {
     public static ArrayList<Afmelding> getAfmeldingen(){return afmeldingen;}
 
     public static void procesAfmeldingen() throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt");
+        FileReader reader = new FileReader(pathNameAbsences);
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
@@ -55,7 +57,7 @@ public class Afmelding {
         }
         reader.close();
 
-        File file = new File("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt");
+        File file = new File(pathNameAbsences);
         if(file.exists()){
             file.delete();
             file.createNewFile();
@@ -71,9 +73,42 @@ public class Afmelding {
     public void addAbsentie() throws IOException {
         afmeldingen.add(this);
 
-        FileWriter fw = new FileWriter("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt", true);
+        FileWriter fw = new FileWriter(pathNameAbsences, true);
         fw.write(String.format("%s : %s : %s : %s : %s : %s\r\n", student.getNaam(), student.getStudentNr(), regel.getDag(), regel.getCollege().getCode(), regel.getTijd().getBlok(), reden));
         fw.close();
+    }
+
+    public void removeAbsentie() throws IOException{
+        editAfmeldingFile();
+        afmeldingen.remove(this);
+    }
+
+    public void editAfmeldingFile()throws IOException{
+        File inputFile = new File(pathNameAbsences);
+        ArrayList<String> lines = new ArrayList<>();
+
+        BufferedReader bReader = new BufferedReader(new FileReader(inputFile));
+
+        String currentLine;
+        String lineToRemove = String.format("%s : %s : %s : %s : %s : %s", student.getNaam(), student.getStudentNr(), regel.getDag(), regel.getCollege().getCode(), regel.getTijd().getBlok(), reden);
+
+        while((currentLine = bReader.readLine()) != null) {
+            // trim newline when comparing with lineToRemove
+            if(currentLine.trim().equals(lineToRemove)) continue;
+            lines.add(currentLine + System.getProperty("line.separator"));
+        }
+        bReader.close();
+
+        BufferedWriter bWriter = new BufferedWriter(new FileWriter(inputFile));
+
+        inputFile.delete();
+        inputFile.createNewFile();
+
+        for(String line : lines){
+            bWriter.write(line);
+        }
+
+        bWriter.close();
     }
 
     public boolean equals(Object andereObject){

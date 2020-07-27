@@ -16,7 +16,8 @@ import static domain.Afmelding.getAfmeldingen;
 
 public class AbsentiePopUpController {
     @FXML private Button cancelButton;
-    @FXML private Button confirmButton;
+    @FXML private Button confirmAbsenceButton;
+    @FXML private Button cancelAbsenceButton;
     @FXML private Label informationLabel;
     @FXML private TextArea redenTextArea;
 
@@ -34,24 +35,34 @@ public class AbsentiePopUpController {
     public static void setRegel(RoosterRegel regel){AbsentiePopUpController.regel = regel;}
 
     public void setValidationAfmelding(){
-        for(Afmelding afmelding : getAfmeldingen()){
-            if(afmelding.equals(new Afmelding(regel, student))){
-                labelText = String.format("Je hebt je al afgemeld voor college %s.", regel.getCollege().getNaam());
-                cancelButton.setText("Ok");
-                confirmButton.setVisible(false);
-                redenTextArea.setVisible(false);
-                break;
-            }else{
-                labelText = String.format("Wil jij je afmelden voor college %s? Wat is je reden?", regel.getCollege().getNaam());
-            }
-        }
-
+        boolean passOnAbsence = false;
         if(regel.getDag().compareTo(LocalDate.now()) < 0){
             labelText = "Je kant je niet afmelden voor een college in het verleden.";
-            cancelButton.setText("Ok");
-            confirmButton.setVisible(false);
+            cancelAbsenceButton.setVisible(false);
+            confirmAbsenceButton.setVisible(false);
             redenTextArea.setVisible(false);
+        }else{
+            if(getAfmeldingen().isEmpty()){
+                labelText = String.format("Wil jij je afmelden voor college %s? Wat is je reden?", regel.getCollege().getNaam());
+                passOnAbsence = true;
+            }else{
+                for(Afmelding afmelding : getAfmeldingen()){
+                    if(afmelding.equals(new Afmelding(regel, student))){
+                        labelText = String.format("Je hebt je al afgemeld voor college %s. Wil jij jouw afmelding annuleren?", regel.getCollege().getNaam());
+                        passOnAbsence = false;
+                    break;
+                    }else{
+                        labelText = String.format("Wil jij je afmelden voor college %s? Wat is je reden?", regel.getCollege().getNaam());
+                        passOnAbsence = true;
+                    }
+                }
+            }
+            cancelAbsenceButton.setVisible(!passOnAbsence);
+            confirmAbsenceButton.setVisible(passOnAbsence);
+            redenTextArea.setVisible(passOnAbsence);
         }
+
+
     }
 
     public void setText(){
@@ -65,16 +76,37 @@ public class AbsentiePopUpController {
         informationLabel.setAlignment(Pos.CENTER);
     }
 
-    public void confirmButton() throws IOException {
+    public void confirmAbsenceButton() throws IOException {
         String reden = redenTextArea.getText();
         if(reden.isEmpty() || reden.equals(" ")){ reden = "Geen reden gegeven"; }
-        Afmelding am = new Afmelding(regel, student, reden);
-        am.addAbsentie();
+        Afmelding afmelding = new Afmelding(regel, student, reden);
+        afmelding.addAbsentie();
+
+        System.out.println(String.format("Afgemeld voor college %s.", regel.getCollege()));
+
+        backToRooster();
+    }
+
+    public void cancelAbsenceButton() throws IOException{
+        boolean errorNotFound = true;
+        for(Afmelding tempAfmelding : Afmelding.getAfmeldingen()){
+            if(tempAfmelding.equals(new Afmelding(regel, student))){
+                tempAfmelding.removeAbsentie();
+                errorNotFound = false;
+                break;
+            }
+        }
+        if(errorNotFound){
+            System.out.println("Couldn't find Afmelding.");
+        }else{
+            System.out.println(String.format("Afmelding voor %s geanulleerd.", regel.toString()));
+        }
+
         backToRooster();
     }
 
     public void backToRooster(){
-        Stage stage = (Stage) confirmButton.getScene().getWindow();
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }
 }

@@ -37,7 +37,7 @@ public class College {
     public static ArrayList<College> getAllCollege(){return allColleges;}
 
     public static void procesCollege() throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Colleges");
+        FileReader reader = new FileReader("Development/Testing/CodeOnly/src/textfiles/Colleges");
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {

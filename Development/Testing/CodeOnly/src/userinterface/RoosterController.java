@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -29,8 +30,6 @@ public class RoosterController {
     @FXML private Button allAbsenties;
     @FXML private Button ziekmeldKnop;
 
-    @FXML private ListView<Presentie> listCurrentCollege = new ListView<>();
-    @FXML private ListView<RoosterRegel> thisDay = new ListView<>();
     @FXML private DatePicker huidigeDatum;
     @FXML private Label currentCollegeLabel;
 
@@ -46,10 +45,17 @@ public class RoosterController {
     @FXML private ListView<RoosterRegel> donderdagListview = new ListView<>();
     @FXML private ListView<RoosterRegel> vrijdagListview = new ListView<>();
 
-    private Rooster rooster = Rooster.getRooster();
-    private Student gebruiker;
+    @FXML private ListView<Presentie> listCurrentCollege = new ListView<>();
+    @FXML private ListView<RoosterRegel> thisDay = new ListView<>();
+
+    @FXML private ArrayList<Button> docentButtons = new ArrayList<>();
+    @FXML private ArrayList<Button> studentButtons = new ArrayList<>();
+
     private ArrayList<ListView<RoosterRegel>> weekdagen = new ArrayList<>();
     private ArrayList<Label> weekDagLabels = new ArrayList<>();
+
+    private Rooster rooster = Rooster.getRooster();
+    private Student gebruiker;
     private boolean dagIsVisible;
     private boolean isUserDocent;
 
@@ -88,6 +94,7 @@ public class RoosterController {
         dagIsVisible = isDagVisible;
         thisDay.setVisible(isDagVisible);
         listCurrentCollege.setVisible(isDagVisible && isUserDocent);
+        currentCollegeLabel.setVisible(isDagVisible && isUserDocent);
         for(ListView<RoosterRegel> dag : weekdagen){
             dag.setVisible(!isDagVisible);
         }
@@ -213,7 +220,7 @@ public class RoosterController {
         for(Student student : alleStudenten) { aanwezigheidStudenten.add(getPresentie(student)); }
 
         listCurrentCollege.setItems(aanwezigheidStudenten);
-        currentCollegeLabel.setText( thisRegel.getCollege() + " " + thisRegel);
+        currentCollegeLabel.setText( thisRegel.getCollege() + " : " + thisRegel);
     }
 
     /*
@@ -230,7 +237,7 @@ public class RoosterController {
     }
 
     public Presentie checkZiekmelding(Student student) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Development/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt"));
         LocalDate thisDayDate = thisDay.getSelectionModel().getSelectedItem().getDag();
         String line; LocalDate eindDatum;
 
@@ -250,7 +257,7 @@ public class RoosterController {
     }
 
     public Presentie checkAfmelding(Student student) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader(new FileReader("Coding/Testing/CodeOnly/src/textfiles/Afmeldingen.txt"));
+        BufferedReader bufferedReader = new BufferedReader(new FileReader("Development/Testing/CodeOnly/src/textfiles/Afmeldingen.txt"));
         LocalDate thisDayRegel = thisDay.getSelectionModel().getSelectedItem().getDag();
         String line;
 
@@ -278,6 +285,16 @@ public class RoosterController {
         initialize();
     }
 
+    public void selectStudent() throws IOException {
+        Presentie presentie;
+        Student huidigeStudent;
+        presentie = listCurrentCollege.getSelectionModel().getSelectedItem();
+        if(presentie != null){
+            huidigeStudent = presentie.getStudent();
+            toonStudentOverzichtScherm(huidigeStudent);
+        }
+    }
+
     public void handleAbsentie() throws IOException {
         RoosterRegel regel;
         for(ListView<RoosterRegel> lw : weekdagen){
@@ -285,9 +302,25 @@ public class RoosterController {
             if(regel != null){
                 AbsentiePopUpController.setRegel(regel);
                 lw.getSelectionModel().clearSelection();
+                toonAbsentMeldScherm();
                 break;
             }
         }
+    }
+
+    public void toonStudentOverzichtScherm(Student student) throws IOException{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StudentOverview.fxml"));
+        Parent root = loader.load();
+
+        Stage loginStage = new Stage();
+        loginStage.setTitle("Overzicht " + student.getNaam());
+        loginStage.setScene(new Scene(root));
+        loginStage.show();
+
+        initialize();
+    }
+
+    public void toonAbsentMeldScherm() throws IOException{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("AbsentiePopUp.fxml"));
         Parent root = loader.load();
 
@@ -299,7 +332,7 @@ public class RoosterController {
         initialize();
     }
 
-    public void toonAbsentieScherm() throws IOException {
+    public void toonAbsentiesScherm() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("Absenties.fxml"));
         Parent root = loader.load();
 
@@ -327,4 +360,5 @@ public class RoosterController {
 
         initialize();
     }
+
 }

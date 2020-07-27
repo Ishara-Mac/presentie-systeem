@@ -33,7 +33,7 @@ public class Klas {
     public static ArrayList<Klas> getAllKlassen(){return klassen;}
 
     public static void procesKlas() throws IOException{
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/Klassen");
+        FileReader reader = new FileReader("Development/Testing/CodeOnly/src/textfiles/Klassen");
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {

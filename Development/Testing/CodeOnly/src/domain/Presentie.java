@@ -11,6 +11,8 @@ public class Presentie {
         this.reden = reden;
     }
 
+    public Student getStudent(){return student;}
+
     public PresentieStatus getPresentieStatus(){return presentieStatus;}
 
     public String toString(){

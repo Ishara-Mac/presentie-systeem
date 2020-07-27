@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class RoosterRegel {
@@ -27,7 +29,7 @@ public class RoosterRegel {
     public TijdBlok getTijd(){return tijdBlok;}
 
     public static void procesRooster() throws IOException {
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/RoosterRegel");
+        FileReader reader = new FileReader("Development/Testing/CodeOnly/src/textfiles/RoosterRegel");
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {

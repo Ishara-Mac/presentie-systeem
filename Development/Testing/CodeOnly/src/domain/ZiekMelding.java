@@ -9,7 +9,7 @@ public class ZiekMelding {
     private LocalDate eindDatum = null;
     private Student student;
 
-    private File file = new File("Coding\\Testing\\CodeOnly\\src\\textfiles\\ZiekMeldingen.txt");
+    private File file = new File("Development/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt");
 
     public ZiekMelding(Student student){
         this.student = student;
@@ -24,7 +24,7 @@ public class ZiekMelding {
     public void setEindDatum(){this.eindDatum = LocalDate.now();}
 
     public static void readingZiekMeldingen() throws IOException{
-        FileReader reader = new FileReader("Coding/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt");
+        FileReader reader = new FileReader("Development/Testing/CodeOnly/src/textfiles/ZiekMeldingen.txt");
         BufferedReader bufferedReader = new BufferedReader(reader);
         String line;
         int studentNr;
@@ -44,10 +44,8 @@ public class ZiekMelding {
                     currentStudent = student;
                 }
             }
-            System.out.println(currentStudent);
 
             if(arrOfStr.length < 4){
-                System.out.println("hey");
                 if(currentStudent != null){
                     currentStudent.setPresentie(PresentieStatus.Ziek);
                     currentStudent.setHuidigeZiekMelding(new ZiekMelding(currentStudent, startDatum));
